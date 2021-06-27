@@ -203,13 +203,12 @@ public class FloatLogView extends AbsFloatView implements View.OnClickListener {
                 height = getLayoutParams().height;
                 recyclerView.setVisibility(View.GONE);
                 getLayoutParams().height = v_control.getHeight();
-                FloatWindowManager.updateFloatView(view.getContext().getApplicationContext(),
-                        FloatLogView.this);
+                FloatWindowManager.updateFloatView(getView().getContext().getApplicationContext(), this);
             }
         } else if (v == iv_close) {
             logItemBeanList.clear();
             logListAdapter.notifyDataSetChanged();
-            FloatWindowManager.hideFloatView(view.getContext().getApplicationContext(), this);
+            FloatWindowManager.hideFloatView(getView().getContext().getApplicationContext(), this);
         } else if (v == btn_confirm) {
             updateData();
         } else if (v == btn_cancel) {
@@ -254,7 +253,7 @@ public class FloatLogView extends AbsFloatView implements View.OnClickListener {
         // 设置新的param
         recyclerView.setVisibility(View.VISIBLE);
         getLayoutParams().height = height;
-        FloatWindowManager.updateFloatView(view.getContext().getApplicationContext(), this);
+        FloatWindowManager.updateFloatView(getView().getContext().getApplicationContext(), this);
     }
 
     private void showLevelChoose() {
