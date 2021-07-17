@@ -18,7 +18,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
 import cn.roy.zlib.tool.R;
 import cn.roy.zlib.tool.util.AppOpsManagerUtil;
 
-/** 
+/**
  * @Description 悬浮窗权限请求授权页面
  * @Author kk20
  * @Date 2018/5/1
@@ -36,24 +36,25 @@ import cn.roy.zlib.tool.util.AppOpsManagerUtil;
  */
 public class ApplyAlertWindowPermissionActivity extends Activity {
     private static final int OVERLAYS_CODE = 10001;
-
-    private View viewGrant;
-    private Button btnGrant;
+    private View vApply;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert_window_permission_grant);
 
-        viewGrant = findViewById(R.id.view_grant);
-        btnGrant = findViewById(R.id.btn_grant);
-        btnGrant.setOnClickListener(v -> requestDrawOverlays());
-
+        vApply = findViewById(R.id.view_apply);
+        findViewById(R.id.btn_cancel).setOnClickListener(v -> {
+                    setResult(RESULT_CANCELED);
+                    finish();
+                }
+        );
+        findViewById(R.id.btn_confirm).setOnClickListener(v -> requestDrawOverlays());
         if (AppOpsManagerUtil.checkDrawOverlays(this)) {
             setResult(RESULT_OK);
             finish();
         } else {
-            viewGrant.setVisibility(View.VISIBLE);
+            vApply.setVisibility(View.VISIBLE);
         }
     }
 
@@ -65,6 +66,8 @@ public class ApplyAlertWindowPermissionActivity extends Activity {
             if (AppOpsManagerUtil.checkDrawOverlays(this)) {
                 setResult(RESULT_OK);
                 finish();
+            } else {
+                Toast.makeText(this, "获取\"悬浮窗\"权限失败", Toast.LENGTH_SHORT).show();
             }
         }
     }

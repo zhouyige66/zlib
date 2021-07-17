@@ -158,7 +158,7 @@
                     android:layout_height="24dp"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:background="@drawable/selector_ffffff_5dp"
+                    android:background="@drawable/selector_ffffff_40dp"
                     android:text="取消"
                     android:textColor="#f47139"
                     android:textSize="10dp" />

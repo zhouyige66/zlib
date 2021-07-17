@@ -39,6 +39,12 @@ public class AppOpsManagerUtil {
         return check(context, AppOpsManager.OPSTR_GET_USAGE_STATS);
     }
 
+    /**
+     * 检查是否获取悬浮窗权限
+     *
+     * @param context
+     * @return true-已获取，false-未获取
+     */
     public static boolean checkDrawOverlays(Context context) {
         boolean canDrawOverlays;
         if (Build.VERSION.SDK_INT >= 23) {
