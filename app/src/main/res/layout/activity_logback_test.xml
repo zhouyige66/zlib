@@ -8,51 +8,46 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="读写权限授权" />
+        android:text="模式切换-单文件模式" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="卡顿测试" />
+        android:text="模式切换-多文件模式" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="崩溃测试" />
+        android:text="Log.V"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Trace测试"
+        android:text="Log.D"
         android:textAllCaps="false" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MethodTracing测试"
-        android:textAllCaps="false" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="跳转测试"
+        android:text="Log.I"
         android:textAllCaps="false" />
 
     <Button
         android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="跳转Logback测试"
+        android:text="Log.W"
         android:textAllCaps="false" />
 
     <Button
         android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="跳转Http测试"
+        android:text="Log.E"
         android:textAllCaps="false" />
 </LinearLayout>
