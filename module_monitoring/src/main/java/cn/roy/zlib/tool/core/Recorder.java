@@ -30,7 +30,7 @@ public final class Recorder {
     private List<LogBean> originData;
     private Map<String, TagBean> tagBeanMap;
     private Map<Integer, Set<String>> levelTagMap;
-    private boolean hasRequestDrawOverlaysPermission = false;
+    public boolean hasRequestDrawOverlaysPermission = false;
 
     private Recorder() {
         originData = new ArrayList<>();
@@ -177,7 +177,6 @@ public final class Recorder {
             appContext.startActivity(i);
             return;
         }
-        hasRequestDrawOverlaysPermission = true;
         // 构建日志实体，显示在悬浮窗口
         Intent intent = new Intent(appContext, LogService.class);
         intent.putExtra("data", logBean);

@@ -27,7 +27,7 @@ public class LogListAdapter extends CommonAdapter<LogBean> {
     public LogListAdapter(Context context, List<LogBean> datas) {
         super(context, R.layout.item_log_detail, datas);
 
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.CHINA);
     }
 
     @Override
