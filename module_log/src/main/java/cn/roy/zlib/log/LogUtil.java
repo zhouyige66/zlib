@@ -31,6 +31,14 @@ public class LogUtil {
         return logger;
     }
 
+    public static void v(String log) {
+        getLogger().trace(log);
+    }
+
+    public static void v(String log, Throwable throwable) {
+        getLogger().trace(log, throwable);
+    }
+
     public static void d(String log) {
         getLogger().debug(log);
     }

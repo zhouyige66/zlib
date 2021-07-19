@@ -15,57 +15,60 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import cn.roy.zlib.tool.R;
+import cn.roy.zlib.tool.core.Recorder;
 import cn.roy.zlib.tool.util.AppOpsManagerUtil;
 
-/** 
+/**
  * @Description 悬浮窗权限请求授权页面
  * @Author kk20
  * @Date 2018/5/1
  * @Version V1.0.0
  */
-public class  AlertWindowPermissionGrantActivity extends Activity {
+public class ApplyAlertWindowPermissionActivity extends Activity {
     private static final int OVERLAYS_CODE = 10001;
 
-    private View viewGrant;
-    private Button btnGrant;
+    public static void applyAlertWindowPermission(Context context) {
+        Intent intent = new Intent(context, ApplyAlertWindowPermissionActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alert_window_permission_grant);
-
-        viewGrant = findViewById(R.id.view_grant);
-        btnGrant = findViewById(R.id.btn_grant);
-        btnGrant.setOnClickListener(v -> requestDrawOverlays());
-
         if (AppOpsManagerUtil.checkDrawOverlays(this)) {
             setResult(RESULT_OK);
             finish();
         } else {
-            viewGrant.setVisibility(View.VISIBLE);
+            showApplyPermissionDialog();
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == OVERLAYS_CODE) {
             if (AppOpsManagerUtil.checkDrawOverlays(this)) {
                 setResult(RESULT_OK);
-                finish();
+            } else {
+                Toast.makeText(this, "获取\"悬浮窗\"权限失败", Toast.LENGTH_SHORT).show();
+                Recorder.getInstance().hasRequestDrawOverlaysPermission = false;
+                setResult(RESULT_CANCELED);
             }
+            finish();
         }
     }
 
@@ -74,6 +77,31 @@ public class  AlertWindowPermissionGrantActivity extends Activity {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:" + getPackageName()));
         startActivityForResult(intent, OVERLAYS_CODE);
+    }
+
+    private AlertDialog applyPermissionTipDialog = null;
+
+    private void showApplyPermissionDialog() {
+        View view = LayoutInflater.from(this)
+                .inflate(R.layout.dialog_alert_window_permission_grant, null);
+        view.findViewById(R.id.btn_cancel).setOnClickListener(v -> {
+                    Recorder.getInstance().hasRequestDrawOverlaysPermission = false;
+                    applyPermissionTipDialog.dismiss();
+                    setResult(RESULT_CANCELED);
+                    finish();
+                }
+        );
+        view.findViewById(R.id.btn_confirm).setOnClickListener(v -> {
+                    applyPermissionTipDialog.dismiss();
+                    requestDrawOverlays();
+                }
+        );
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,
+                R.style.StyleDialogTransparent);
+        applyPermissionTipDialog = builder.setView(view)
+                .setCancelable(false)
+                .create();
+        applyPermissionTipDialog.show();
     }
 
     /**

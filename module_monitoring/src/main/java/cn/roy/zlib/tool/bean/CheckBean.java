@@ -6,12 +6,12 @@ package cn.roy.zlib.tool.bean;
  * @Date: 2020/4/6 19:45
  * @Version: v1.0
  */
-public class CheckedItem {
+public class CheckBean {
+    private String text;
     private boolean checked = false;
-    private String itemText;
 
-    public CheckedItem(String itemText) {
-        this.itemText = itemText;
+    public CheckBean(String text) {
+        this.text = text;
     }
 
     public boolean isChecked() {
@@ -22,11 +22,11 @@ public class CheckedItem {
         this.checked = checked;
     }
 
-    public String getItemText() {
-        return itemText;
+    public String getText() {
+        return text;
     }
 
-    public void setItemText(String itemText) {
-        this.itemText = itemText;
+    public void setText(String text) {
+        this.text = text;
     }
 }

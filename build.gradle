@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = "1.4.10"
+    ext.kotlin_version = "1.5.21"
 
     repositories {
 //        google()
@@ -16,7 +16,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         // 发布库到jit pack需要配置
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         // kotlin支持
@@ -47,10 +47,10 @@ task clean(type: Delete) {
 // 统一配置
 ext {
     // android配置项
-    compileSdkVersion = 29
-    buildToolsVersion = '29.0.0'
+    compileSdkVersion = 30
+    buildToolsVersion = '30.0.0'
     minSdkVersion = 16
-    targetSdkVersion = 29
+    targetSdkVersion = 30
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
     // dependencies配置项
