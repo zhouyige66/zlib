@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
+
 import cn.roy.zlib.R;
 import cn.roy.zlib.permission.PermissionGrantActivity;
 import cn.roy.zlib.permission.PermissionUtil;
@@ -70,10 +72,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button1:
-                if(!hasPermission){
+                if (!hasPermission) {
                     PermissionGrantActivity.jump2PermissionGrantActivity(this, permissions);
-                }else{
-                    Log.d("roy","已经获取授权");
+                } else {
+                    Log.d("roy", "已经获取授权");
                 }
                 break;
             case R.id.button2:
@@ -86,14 +88,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button3:
                 int i = 0;
                 int k = 100 / i;
-                Log.d("kk20", "计算结果：" + k);
+                Log.d("kk20", "求商结果：" + k);
                 break;
             case R.id.button4:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    Trace.beginSection("onClick");
+                    Trace.beginSection("SystraceTest");
                 }
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -102,7 +104,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.button5:
-                Debug.startMethodTracing();
+                String path = getExternalFilesDir(null).getAbsolutePath()
+                        + File.separator + "trace"
+                        + File.separator + "method_trace.trace";
+                File file = new File(path);
+                if (!file.getParentFile().exists()) {
+                    file.getParentFile().mkdirs();
+                }
+                Debug.startMethodTracing(path, 1024 * 1024 * 100);
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
