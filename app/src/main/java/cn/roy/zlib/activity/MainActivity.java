@@ -15,12 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cn.roy.zlib.R;
-import cn.roy.zlib.log.LogUtil;
-import cn.roy.zlib.monitor.ExceptionInfoLogger;
-import cn.roy.zlib.monitor.Monitor;
 import cn.roy.zlib.permission.PermissionGrantActivity;
 import cn.roy.zlib.permission.PermissionUtil;
-import cn.roy.zlib.tool.MonitoringToolSDK;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String[] permissions = new String[]{
@@ -45,23 +41,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button6).setOnClickListener(this);
         findViewById(R.id.button7).setOnClickListener(this);
 
-        new Monitor(this)
-                .setBlockMonitorEnable(true)
-                .setBlockMonitorTimeout(2000)
-                .setCrashMonitorEnable(true)
-                .setCrashLogAutoSave(true)
-                .setExceptionInfoLogger(new ExceptionInfoLogger() {
-                    @Override
-                    public void print(String exceptionInfo) {
-                        LogUtil.e(exceptionInfo);
-                    }
-                })
-                .init();
         hasPermission = PermissionUtil.hasPermissions(this, permissions);
         if (hasPermission) {
-            button.setText("已授权");
+            button.setText("读写权限：已授权");
         }
-        MonitoringToolSDK.init(new MonitoringToolSDK.Options(this).setMaxLogCount(50));
     }
 
     @Override
@@ -75,7 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (requestCode == PermissionGrantActivity.CODE_PERMISSION_GRANT_REQUEST) {
             if (resultCode == PermissionGrantActivity.PERMISSIONS_GRANTED) {
-                button.setText("已授权");
+                hasPermission = true;
+                button.setText("读写权限：已授权");
             } else {
                 Toast.makeText(this, "读写权限未被授予，请重试", Toast.LENGTH_SHORT).show();
             }
@@ -86,7 +70,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button1:
-                requestPermission();
+                if(!hasPermission){
+                    PermissionGrantActivity.jump2PermissionGrantActivity(this, permissions);
+                }else{
+                    Log.d("roy","已经获取授权");
+                }
                 break;
             case R.id.button2:
                 try {
@@ -131,10 +119,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
-    }
-
-    private void requestPermission() {
-        PermissionGrantActivity.jump2PermissionGrantActivity(this, permissions);
     }
 
 }

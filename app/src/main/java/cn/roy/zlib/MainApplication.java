@@ -6,6 +6,10 @@ import android.content.Context;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import cn.roy.zlib.log.LogUtil;
+import cn.roy.zlib.monitor.Monitor;
+import cn.roy.zlib.tool.MonitoringToolSDK;
+
 /**
  * @Description:
  * @Author: Roy Z
@@ -37,6 +41,15 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Monitor.getInstance().init(new Monitor.Options(this)
+                .setBlockMonitorEnable(true)
+                .setBlockMonitorTimeout(2000)
+                .setCrashMonitorEnable(true)
+                .setCrashLogAutoSave(true)
+                .setExceptionInfoLogger(exceptionInfo -> LogUtil.e(exceptionInfo)));
+
+        MonitoringToolSDK.init(new MonitoringToolSDK.Options(this).setMaxLogCount(50));
     }
 
 }

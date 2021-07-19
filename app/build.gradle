@@ -40,7 +40,7 @@ dependencies {
 
     implementation project(path: ':module_http_kotlin')
     implementation project(path: ':module_permission')
-    implementation project(path: ':module_log')
+    implementation project(path: ':module_logger')
     implementation project(path: ':module_apm')
     implementation project(path: ':module_monitoring')
 }

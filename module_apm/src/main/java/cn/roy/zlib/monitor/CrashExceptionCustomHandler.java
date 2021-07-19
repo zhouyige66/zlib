@@ -6,6 +6,6 @@ package cn.roy.zlib.monitor;
  * @Date: 2021/02/16
  * @Version: v1.0
  */
-public interface CustomExceptionHandler {
+public interface CrashExceptionCustomHandler {
     void handleException(Throwable ex);
 }
