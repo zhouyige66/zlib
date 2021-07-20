@@ -67,8 +67,8 @@ public class LogConfigBuilder {
         configLogcatAppender();
         // 日志文件夹
         String externalFilesDir = AndroidStorageUtil.getExternalFilesDir(context);
-        String logFilePath = externalFilesDir.concat(File.separator).concat("log/log.txt");
-        String fileNamePattern = logFilePath + File.separator + "log_%d{yyyy-MM-dd}@%i.txt";
+        String logFilePath = externalFilesDir.concat("log/log.txt");
+        String fileNamePattern = externalFilesDir.concat("log/%d{yyyy-MM-dd}/log_%i.txt");
         // 存储文件总大小1G
         long totalFileSize = 1024 * 1024 * 1024;
         // 单个文件最大10M

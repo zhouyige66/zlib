@@ -157,7 +157,7 @@ public class AndroidStorageUtil {
      * @return
      */
     public static String getExternalFilesDir(Context context) {
-        return context.getExternalFilesDir(null).getAbsolutePath();
+        return context.getExternalFilesDir(null).getAbsolutePath() + File.separator;
     }
 
     /**********TODO 功能：存储容量相关方法**********/

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.File;
 
 import cn.roy.zlib.R;
+import cn.roy.zlib.log.LogUtil;
 import cn.roy.zlib.permission.PermissionGrantActivity;
 import cn.roy.zlib.permission.PermissionUtil;
 
@@ -72,13 +73,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button1:
+                LogUtil.d("点击了获取授权按钮");
                 if (!hasPermission) {
                     PermissionGrantActivity.jump2PermissionGrantActivity(this, permissions);
                 } else {
-                    Log.d("roy", "已经获取授权");
+                    LogUtil.d("已经获取授权");
                 }
                 break;
             case R.id.button2:
+                LogUtil.d("卡顿测试");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
@@ -86,16 +89,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.button3:
+                LogUtil.d("崩溃测试");
                 int i = 0;
                 int k = 100 / i;
-                Log.d("kk20", "求商结果：" + k);
+                LogUtil.d("k==" + k);
                 break;
             case R.id.button4:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    Trace.beginSection("SystraceTest");
+                    Trace.beginSection("Roy");
                 }
                 try {
                     Thread.sleep(1000);
+                    ((Button) v).setText("Roy");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
