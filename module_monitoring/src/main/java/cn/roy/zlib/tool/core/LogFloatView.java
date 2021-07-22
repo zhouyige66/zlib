@@ -28,7 +28,7 @@ import cn.roy.zlib.tool.bean.LogBean;
 
 /**
  * @Description 悬浮日志视图
- * @Author kk20
+ * @Author Roy Z
  * @Date 2018/4/16
  * @Version V1.0.0
  */

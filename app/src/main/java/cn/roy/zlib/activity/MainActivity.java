@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Trace;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,8 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 
+import cn.roy.zlib.LogUtilWrapper;
 import cn.roy.zlib.R;
-import cn.roy.zlib.log.LogUtil;
 import cn.roy.zlib.permission.PermissionGrantActivity;
 import cn.roy.zlib.permission.PermissionUtil;
 
@@ -73,15 +72,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button1:
-                LogUtil.d("点击了获取授权按钮");
+                LogUtilWrapper.d("点击了获取授权按钮");
                 if (!hasPermission) {
                     PermissionGrantActivity.jump2PermissionGrantActivity(this, permissions);
                 } else {
-                    LogUtil.d("已经获取授权");
+                    LogUtilWrapper.d("已经获取授权");
                 }
                 break;
             case R.id.button2:
-                LogUtil.d("卡顿测试");
+                LogUtilWrapper.d("卡顿测试");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
@@ -89,10 +88,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.button3:
-                LogUtil.d("崩溃测试");
+                LogUtilWrapper.d("崩溃测试");
                 int i = 0;
                 int k = 100 / i;
-                LogUtil.d("k==" + k);
+                LogUtilWrapper.d("k==" + k);
                 break;
             case R.id.button4:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -125,9 +124,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Debug.stopMethodTracing();
                 break;
             case R.id.button6:
+                LogUtilWrapper.d("跳转至logback测试页面");
                 startActivity(new Intent(this, LogbackTestActivity.class));
                 break;
             case R.id.button7:
+                LogUtilWrapper.d("跳转至http测试页面");
                 startActivity(new Intent(this, HttpTestActivity.class));
                 break;
             default:

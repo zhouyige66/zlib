@@ -12,7 +12,7 @@ import androidx.core.content.PermissionChecker;
 
 /**
  * @Description 权限检查工具
- * @Author kk20
+ * @Author Roy Z
  * @Date 2018/1/18
  * @Version V1.0.0
  */

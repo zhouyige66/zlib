@@ -1,7 +1,6 @@
 package cn.roy.zlib.tool.component;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -33,11 +33,11 @@ import cn.roy.zlib.tool.util.AppOpsManagerUtil;
 
 /**
  * @Description 悬浮窗权限请求授权页面
- * @Author kk20
+ * @Author Roy Z
  * @Date 2018/5/1
  * @Version V1.0.0
  */
-public class ApplyAlertWindowPermissionActivity extends Activity {
+public class ApplyAlertWindowPermissionActivity extends AppCompatActivity {
     private static final int OVERLAYS_CODE = 10001;
 
     public static void applyAlertWindowPermission(Context context) {
@@ -97,7 +97,7 @@ public class ApplyAlertWindowPermissionActivity extends Activity {
                 }
         );
         AlertDialog.Builder builder = new AlertDialog.Builder(this,
-                R.style.StyleDialogTransparent);
+                R.style.DialogStyleTransparent);
         applyPermissionTipDialog = builder.setView(view)
                 .setCancelable(false)
                 .create();

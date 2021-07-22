@@ -16,7 +16,7 @@ import cn.roy.zlib.tool.core.FloatWindowManager;
 
 /**
  * @Description 悬浮显示日志后台服务
- * @Author kk20
+ * @Author Roy Z
  * @Date 2018/4/16
  * @Version V1.0.0
  */

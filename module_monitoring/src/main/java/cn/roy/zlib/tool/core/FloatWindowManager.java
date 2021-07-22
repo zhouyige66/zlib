@@ -6,7 +6,7 @@ import android.view.WindowManager;
 
 /**
  * @Description 悬浮window管理者
- * @Author kk20
+ * @Author Roy Z
  * @Date 2018/1/18
  * @Version V1.0.0
  */

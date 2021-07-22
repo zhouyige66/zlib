@@ -14,7 +14,7 @@ import cn.roy.zlib.tool.bean.LogBean;
 
 /**
  * @Description 日志适配器
- * @Author kk20
+ * @Author Roy Z
  * @Date 2018/4/16
  * @Version V1.0.0
  */

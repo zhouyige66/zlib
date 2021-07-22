@@ -6,17 +6,35 @@
     <!--锁屏后台运行-->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <application
-        android:allowBackup="true"
-        android:label="@string/app_name"
-        android:supportsRtl="true">
-
+    <application>
         <activity
-            android:name="cn.roy.zlib.tool.component.ApplyAlertWindowPermissionActivity"
+            android:name=".component.ApplyAlertWindowPermissionActivity"
             android:launchMode="singleTask"
-            android:theme="@style/StyleActivityTransparent" />
-        <service android:name="cn.roy.zlib.tool.component.LogService" />
+            android:theme="@style/ActivityThemeTransparent" />
+        <activity
+            android:name=".component.LogListActivity"
+            android:icon="@mipmap/ic_float_log"
+            android:label="FloatLog"
+            android:taskAffinity="cn.roy.zlib.tool.${applicationId}"
+            android:theme="@style/ActivityThemeNoTitle" />
 
+        <activity-alias
+            android:name="cn.roy.zlib.tool.component.FloatLogLauncherActivity"
+            android:enabled="true"
+            android:icon="@mipmap/ic_float_log"
+            android:label="FloatLog"
+            android:targetActivity="cn.roy.zlib.tool.component.LogListActivity"
+            android:taskAffinity="cn.roy.zlib.tool.${applicationId}"
+            android:theme="@style/ActivityThemeNoTitle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <!-- Android TV launcher intent -->
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <service android:name=".component.LogService" />
     </application>
-
 </manifest>

@@ -17,7 +17,7 @@ import androidx.annotation.LayoutRes;
 
 /**
  * @Description 悬浮窗视图基类
- * @Author kk20
+ * @Author Roy Z
  * @Date 2018/4/16
  * @Version V1.0.0
  */

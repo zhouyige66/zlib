@@ -6,7 +6,7 @@ import cn.roy.zlib.tool.core.Recorder;
 
 /**
  * @Description 悬浮窗监视日志SDK
- * @Author kk20
+ * @Author Roy Z
  * @Date 2018/4/16
  * @Version V1.0.0
  */

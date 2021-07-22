@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * @Description 应用使用情况查看工具
- * @Author kk20
+ * @Author Roy Z
  * @Date 2018/3/15
  * @Version V1.0.0
  */

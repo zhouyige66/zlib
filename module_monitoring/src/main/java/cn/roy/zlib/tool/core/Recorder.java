@@ -25,6 +25,8 @@ import cn.roy.zlib.tool.util.AppOpsManagerUtil;
  * @Version: v1.0
  */
 public final class Recorder {
+    public static final String INTENT_FILTER_LOG_EVENT = "intent_filter_log_event";
+
     private Context appContext;
     private int maxLogItemCount = 1000;// 默认日志容器存储最大值
     private List<LogBean> originData;
@@ -181,6 +183,11 @@ public final class Recorder {
         Intent intent = new Intent(appContext, LogService.class);
         intent.putExtra("data", logBean);
         appContext.startService(intent);
+        // 发送广播
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(INTENT_FILTER_LOG_EVENT);
+        broadcastIntent.putExtra("data", logBean);
+        appContext.sendBroadcast(broadcastIntent);
     }
 
     /**

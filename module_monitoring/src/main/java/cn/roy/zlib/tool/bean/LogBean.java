@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 /**
  * @Description 日志bean
- * @Author kk20
+ * @Author Roy Z
  * @Date 2018/4/16
  * @Version V1.0.0
  */
