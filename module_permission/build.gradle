@@ -27,7 +27,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation rootProject.junit
-    androidTestImplementation rootProject.androidx_test
+    androidTestImplementation rootProject.androidx_test_ext
     androidTestImplementation rootProject.androidx_test_espresso
 
     implementation rootProject.androidx_appcompat

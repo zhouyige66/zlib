@@ -2,6 +2,7 @@ include ':module_apm'
 include ':module_http_kotlin'
 include ':module_logger'
 include ':module_monitoring'
+include ':module_monitoring_op'
 include ':module_permission'
 
 //include ':app'

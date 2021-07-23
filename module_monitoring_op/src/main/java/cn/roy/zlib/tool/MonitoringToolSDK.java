@@ -2,8 +2,6 @@ package cn.roy.zlib.tool;
 
 import android.content.Context;
 
-import cn.roy.zlib.tool.core.Recorder;
-
 /**
  * @Description 悬浮窗监视日志SDK
  * @Author Roy Z
@@ -29,11 +27,10 @@ public final class MonitoringToolSDK {
     }
 
     private int maxLogCount = 1000;
-    private boolean isFloatLogEnable = BuildConfig.DEBUG;
+    private boolean isFloatLogEnable = false;
 
     public void init(Context context) {
-        Recorder.getInstance().setAppContext(context.getApplicationContext());
-        Recorder.getInstance().setMaxLogItemCount(maxLogCount);
+
     }
 
     public int getMaxLogCount() {
@@ -51,4 +48,5 @@ public final class MonitoringToolSDK {
     public void setFloatLogEnable(boolean floatLogEnable) {
         isFloatLogEnable = floatLogEnable;
     }
+
 }

@@ -1,6 +1,8 @@
-apply plugin: 'com.android.library'
+plugins {
+    id 'com.android.library'
+    id 'com.github.dcendents.android-maven'
+}
 
-apply plugin: 'com.github.dcendents.android-maven'
 group = 'cn.roy.zlib'
 
 android {
@@ -14,6 +16,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner rootProject.testInstrumentationRunner
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -22,15 +25,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation rootProject.junit
     androidTestImplementation rootProject.androidx_test_ext
     androidTestImplementation rootProject.androidx_test_espresso
 
     implementation rootProject.androidx_appcompat
-    api 'org.slf4j:slf4j-api:1.7.25'
-    api 'com.github.tony19:logback-android:2.0.0'
 }

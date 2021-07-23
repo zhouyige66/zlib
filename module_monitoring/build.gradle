@@ -33,10 +33,9 @@ android {
 
 dependencies {
     testImplementation rootProject.junit
-    androidTestImplementation rootProject.androidx_test
+    androidTestImplementation rootProject.androidx_test_ext
     androidTestImplementation rootProject.androidx_test_espresso
 
     implementation rootProject.androidx_appcompat
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation rootProject.material
 }
