@@ -82,6 +82,17 @@ public class LogBean implements Parcelable {
         this.date = date;
     }
 
+    public boolean containKey(String key) {
+        return logTag.contains(key) || logText.contains(key);
+    }
+
+    protected LogBean(Parcel in) {
+        this.logLevel = in.readInt();
+        this.logTag = in.readString();
+        this.logText = in.readString();
+        this.date = in.readLong();
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -93,13 +104,6 @@ public class LogBean implements Parcelable {
         dest.writeString(this.logTag);
         dest.writeString(this.logText);
         dest.writeLong(this.date);
-    }
-
-    protected LogBean(Parcel in) {
-        this.logLevel = in.readInt();
-        this.logTag = in.readString();
-        this.logText = in.readString();
-        this.date = in.readLong();
     }
 
     public static final Creator<LogBean> CREATOR = new Creator<LogBean>() {

@@ -13,34 +13,42 @@ import cn.roy.zlib.tool.core.Recorder;
 public final class MonitoringToolSDK {
     // 私有构造方法
     private MonitoringToolSDK() {
-
     }
 
-    public static void init(Options options) {
-        Recorder.getInstance().setAppContext(options.getContext());
-        Recorder.getInstance().setMaxLogItemCount(options.getMaxLogCount());
+    private static MonitoringToolSDK instance;
+
+    public static MonitoringToolSDK getInstance() {
+        if (instance == null) {
+            synchronized (Recorder.class) {
+                if (instance == null) {
+                    instance = new MonitoringToolSDK();
+                }
+            }
+        }
+        return instance;
     }
 
-    public static final class Options {
-        private Context context;
-        private int maxLogCount = 1000;
+    private int maxLogCount = 1000;
+    private boolean isFloatLogEnable = BuildConfig.DEBUG;
 
-        public Options(Context context) {
-            this.context = context;
-        }
-
-        public Context getContext() {
-            return context;
-        }
-
-        public Options setMaxLogCount(int maxLogCount) {
-            this.maxLogCount = maxLogCount;
-            return this;
-        }
-
-        public int getMaxLogCount() {
-            return maxLogCount;
-        }
+    public void init(Context context) {
+        Recorder.getInstance().setAppContext(context.getApplicationContext());
+        Recorder.getInstance().setMaxLogItemCount(maxLogCount);
     }
 
+    public int getMaxLogCount() {
+        return maxLogCount;
+    }
+
+    public void setMaxLogCount(int maxLogCount) {
+        this.maxLogCount = maxLogCount;
+    }
+
+    public boolean isFloatLogEnable() {
+        return isFloatLogEnable;
+    }
+
+    public void setFloatLogEnable(boolean floatLogEnable) {
+        isFloatLogEnable = floatLogEnable;
+    }
 }

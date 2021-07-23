@@ -50,7 +50,7 @@ public class MainApplication extends Application {
                 .setCrashMonitorEnable(true)
                 .setCrashLogAutoSave(true)
                 .setExceptionInfoLogger(exceptionInfo -> LogUtil.e(exceptionInfo)));
-        MonitoringToolSDK.init(new MonitoringToolSDK.Options(this).setMaxLogCount(50));
+        MonitoringToolSDK.getInstance().init(this);
     }
 
 }

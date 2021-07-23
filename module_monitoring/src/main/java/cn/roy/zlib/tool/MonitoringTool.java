@@ -12,7 +12,6 @@ import cn.roy.zlib.tool.core.Recorder;
 public class MonitoringTool {
 
     private MonitoringTool() {
-
     }
 
     public static void v(String tag, String msg) {
@@ -36,8 +35,10 @@ public class MonitoringTool {
     }
 
     private static void addLog(int level, String tag, String msg) {
-        LogBean bean = new LogBean(level, tag, msg);
-        Recorder.getInstance().addLog(bean);
+        if (MonitoringToolSDK.getInstance().isFloatLogEnable()) {
+            LogBean bean = new LogBean(level, tag, msg);
+            Recorder.getInstance().addLog(bean);
+        }
     }
 
 }

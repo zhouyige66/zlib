@@ -83,7 +83,7 @@ public class ApplyAlertWindowPermissionActivity extends AppCompatActivity {
 
     private void showApplyPermissionDialog() {
         View view = LayoutInflater.from(this)
-                .inflate(R.layout.dialog_alert_window_permission_grant, null);
+                .inflate(R.layout.dialog_apply_alert_window_permission, null);
         view.findViewById(R.id.btn_cancel).setOnClickListener(v -> {
                     Recorder.getInstance().hasRequestDrawOverlaysPermission = false;
                     applyPermissionTipDialog.dismiss();
