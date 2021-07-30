@@ -28,6 +28,27 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/vRestart"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/selector_transparent_gray">
+
+        <TextView
+            android:id="@+id/tvRestart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="关闭日志功能"
+            android:textSize="16dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#cbcaca" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/vCleanData"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -39,28 +60,6 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="清空数据"
-            android:textSize="16dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="#cbcaca" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/vRestart"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/selector_transparent_gray">
-
-        <TextView
-            android:id="@+id/tvRestart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="重启浮窗"
             android:textSize="16dp" />
 
         <View

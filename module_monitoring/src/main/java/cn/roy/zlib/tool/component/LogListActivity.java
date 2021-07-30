@@ -224,35 +224,40 @@ public class LogListActivity extends AppCompatActivity {
             bottomSheetDialog.setContentView(R.layout.dialog_float_log_manage);
             bottomSheetDialog.setCancelable(true);
             bottomSheetDialog.setCanceledOnTouchOutside(true);
+            // 悬浮窗权限管理
+            bottomSheetDialog.findViewById(R.id.vApplyPermission).setOnClickListener(v -> {
+                requestDrawOverlays();
+            });
+            // 启用/关闭日志功能
+            tvFloatLogStatus = bottomSheetDialog.findViewById(R.id.tvRestart);
+            tvFloatLogStatus.setText(MonitoringToolSDK.getInstance().isEnable() ? "关闭日志功能"
+                    : "启动日志功能");
+            bottomSheetDialog.findViewById(R.id.vRestart).setOnClickListener(v -> {
+                bottomSheetDialog.hide();
+                boolean enable = MonitoringToolSDK.getInstance().isEnable();
+                if (enable) {
+                    Recorder.getInstance().clear();
+                    tvFloatLogStatus.setText("启动日志功能");
+                    // 停止浮窗
+                    stopService(new Intent(LogListActivity.this, LogService.class));
+                } else {
+                    tvFloatLogStatus.setText("关闭日志功能");
+                }
+                MonitoringToolSDK.getInstance().setEnable(!enable);
+            });
+            // 清除数据
             bottomSheetDialog.findViewById(R.id.vCleanData).setOnClickListener(v -> {
                 bottomSheetDialog.hide();
                 logBeanList.clear();
                 logListAdapterData.clear();
                 logListAdapter.notifyDataSetChanged();
             });
-            bottomSheetDialog.findViewById(R.id.vRestart).setOnClickListener(v -> {
-                bottomSheetDialog.hide();
-                boolean floatLogEnable = MonitoringToolSDK.getInstance().isFloatLogEnable();
-                if (floatLogEnable) {
-                    Recorder.getInstance().clear();
-                    tvFloatLogStatus.setText("开启浮窗");
-                    // 停止浮窗
-                    stopService(new Intent(LogListActivity.this, LogService.class));
-                } else {
-                    tvFloatLogStatus.setText("关闭浮窗");
-                }
-                MonitoringToolSDK.getInstance().setFloatLogEnable(!floatLogEnable);
-            });
-            bottomSheetDialog.findViewById(R.id.vApplyPermission).setOnClickListener(v -> {
-                requestDrawOverlays();
-            });
-            tvFloatLogStatus = bottomSheetDialog.findViewById(R.id.tvRestart);
-            tvFloatLogStatus.setText(MonitoringToolSDK.getInstance().isFloatLogEnable() ? "关闭浮窗"
-                    : "开启浮窗");
+            // 退出
             bottomSheetDialog.findViewById(R.id.vExit).setOnClickListener(v -> {
                 bottomSheetDialog.hide();
                 finish();
             });
+            // 取消
             bottomSheetDialog.findViewById(R.id.tvCancel).setOnClickListener(v -> {
                 bottomSheetDialog.hide();
             });

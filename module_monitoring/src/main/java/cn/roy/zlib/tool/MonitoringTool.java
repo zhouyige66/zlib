@@ -57,7 +57,7 @@ public class MonitoringTool {
     }
 
     private static void addLog(int level, String tag, String msg) {
-        if (MonitoringToolSDK.getInstance().isFloatLogEnable()) {
+        if (MonitoringToolSDK.getInstance().isEnable()) {
             LogBean bean = new LogBean(level, tag, msg);
             Recorder.getInstance().addLog(bean);
         }

@@ -29,7 +29,7 @@ public final class MonitoringToolSDK {
     }
 
     private int maxLogCount = 1000;
-    private boolean isFloatLogEnable = BuildConfig.DEBUG;
+    private boolean enable = true;
 
     public void init(Context context) {
         Recorder.getInstance().setAppContext(context.getApplicationContext());
@@ -44,11 +44,11 @@ public final class MonitoringToolSDK {
         this.maxLogCount = maxLogCount;
     }
 
-    public boolean isFloatLogEnable() {
-        return isFloatLogEnable;
+    public boolean isEnable() {
+        return enable;
     }
 
-    public void setFloatLogEnable(boolean floatLogEnable) {
-        isFloatLogEnable = floatLogEnable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }
