@@ -1,13 +1,16 @@
 package cn.roy.zlib.tool.component;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -240,6 +243,9 @@ public class LogListActivity extends AppCompatActivity {
                 }
                 MonitoringToolSDK.getInstance().setFloatLogEnable(!floatLogEnable);
             });
+            bottomSheetDialog.findViewById(R.id.vApplyPermission).setOnClickListener(v -> {
+                requestDrawOverlays();
+            });
             tvFloatLogStatus = bottomSheetDialog.findViewById(R.id.tvRestart);
             tvFloatLogStatus.setText(MonitoringToolSDK.getInstance().isFloatLogEnable() ? "关闭浮窗"
                     : "开启浮窗");
@@ -256,5 +262,12 @@ public class LogListActivity extends AppCompatActivity {
         bottomSheetDialog.show();
     }
 
+    private static final int OVERLAYS_CODE = 10001;
 
+    @TargetApi(23)
+    private void requestDrawOverlays() {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, OVERLAYS_CODE);
+    }
 }

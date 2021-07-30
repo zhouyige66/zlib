@@ -30,7 +30,6 @@ public final class Recorder {
     private List<LogBean> originData;
     private Map<String, TagBean> tagBeanMap;
     private Map<Integer, Set<String>> levelTagMap;
-    public boolean hasRequestDrawOverlaysPermission = false;
 
     private Recorder() {
         originData = new ArrayList<>();
@@ -163,29 +162,22 @@ public final class Recorder {
             levelTagMap.put(logLevel, tagSet);
         }
         tagSet.add(logTag);
-
         if (appContext == null) {
             return;
         }
-        if (!AppOpsManagerUtil.checkDrawOverlays(appContext)) {
-            if (hasRequestDrawOverlaysPermission) {
-                return;
-            }
-            hasRequestDrawOverlaysPermission = true;
-            Intent i = new Intent(appContext, ApplyAlertWindowPermissionActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            appContext.startActivity(i);
-            return;
-        }
-        // 构建日志实体，显示在悬浮窗口
-        Intent intent = new Intent(appContext, LogService.class);
-        intent.putExtra("data", logBean);
-        appContext.startService(intent);
         // 发送广播
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(INTENT_FILTER_LOG_EVENT);
         broadcastIntent.putExtra("data", logBean);
         appContext.sendBroadcast(broadcastIntent);
+
+        // 判断是否有权限
+        if (AppOpsManagerUtil.checkDrawOverlays(appContext)) {
+            // 构建日志实体，显示在悬浮窗口
+            Intent intent = new Intent(appContext, LogService.class);
+            intent.putExtra("data", logBean);
+            appContext.startService(intent);
+        }
     }
 
     /**

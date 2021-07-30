@@ -17,20 +17,40 @@ public class MonitoringTool {
         Log.v(tag, msg);
     }
 
+    public static void v(String tag, String msg, Throwable throwable) {
+        Log.v(tag, msg, throwable);
+    }
+
     public static void d(String tag, String msg) {
         Log.d(tag, msg);
+    }
+
+    public static void d(String tag, String msg, Throwable throwable) {
+        Log.d(tag, msg, throwable);
     }
 
     public static void i(String tag, String msg) {
         Log.i(tag, msg);
     }
 
+    public static void i(String tag, String msg, Throwable throwable) {
+        Log.i(tag, msg, throwable);
+    }
+
     public static void w(String tag, String msg) {
         Log.w(tag, msg);
     }
 
+    public static void w(String tag, String msg, Throwable throwable) {
+        Log.w(tag, msg, throwable);
+    }
+
     public static void e(String tag, String msg) {
         Log.e(tag, msg);
+    }
+
+    public static void e(String tag, String msg, Throwable throwable) {
+        Log.e(tag, msg, throwable);
     }
 
 }

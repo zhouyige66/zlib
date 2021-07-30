@@ -28,7 +28,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import cn.roy.zlib.tool.R;
-import cn.roy.zlib.tool.core.Recorder;
 import cn.roy.zlib.tool.util.AppOpsManagerUtil;
 
 /**
@@ -50,6 +49,7 @@ public class ApplyAlertWindowPermissionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (AppOpsManagerUtil.checkDrawOverlays(this)) {
+            Toast.makeText(this, "已经获取授权，无需再次获取", Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);
             finish();
         } else {
@@ -65,7 +65,6 @@ public class ApplyAlertWindowPermissionActivity extends AppCompatActivity {
                 setResult(RESULT_OK);
             } else {
                 Toast.makeText(this, "获取\"悬浮窗\"权限失败", Toast.LENGTH_SHORT).show();
-                Recorder.getInstance().hasRequestDrawOverlaysPermission = false;
                 setResult(RESULT_CANCELED);
             }
             finish();
@@ -85,7 +84,6 @@ public class ApplyAlertWindowPermissionActivity extends AppCompatActivity {
         View view = LayoutInflater.from(this)
                 .inflate(R.layout.dialog_apply_alert_window_permission, null);
         view.findViewById(R.id.btn_cancel).setOnClickListener(v -> {
-                    Recorder.getInstance().hasRequestDrawOverlaysPermission = false;
                     applyPermissionTipDialog.dismiss();
                     setResult(RESULT_CANCELED);
                     finish();

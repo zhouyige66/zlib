@@ -1,5 +1,7 @@
 package cn.roy.zlib.tool;
 
+import android.util.Log;
+
 import cn.roy.zlib.tool.bean.LogBean;
 import cn.roy.zlib.tool.core.Recorder;
 
@@ -18,20 +20,40 @@ public class MonitoringTool {
         addLog(LogBean.VERBOSE, tag, msg);
     }
 
+    public static void v(String tag, String msg, Throwable throwable) {
+        addLog(LogBean.VERBOSE, tag, msg + '\n' + Log.getStackTraceString(throwable));
+    }
+
     public static void d(String tag, String msg) {
         addLog(LogBean.DEBUG, tag, msg);
+    }
+
+    public static void d(String tag, String msg, Throwable throwable) {
+        addLog(LogBean.DEBUG, tag, msg + '\n' + Log.getStackTraceString(throwable));
     }
 
     public static void i(String tag, String msg) {
         addLog(LogBean.INFO, tag, msg);
     }
 
+    public static void i(String tag, String msg, Throwable throwable) {
+        addLog(LogBean.INFO, tag, msg + '\n' + Log.getStackTraceString(throwable));
+    }
+
     public static void w(String tag, String msg) {
         addLog(LogBean.WARN, tag, msg);
     }
 
+    public static void w(String tag, String msg, Throwable throwable) {
+        addLog(LogBean.WARN, tag, msg + '\n' + Log.getStackTraceString(throwable));
+    }
+
     public static void e(String tag, String msg) {
         addLog(LogBean.ERROR, tag, msg);
+    }
+
+    public static void e(String tag, String msg, Throwable throwable) {
+        addLog(LogBean.ERROR, tag, msg + '\n' + Log.getStackTraceString(throwable));
     }
 
     private static void addLog(int level, String tag, String msg) {

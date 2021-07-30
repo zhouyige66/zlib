@@ -2,6 +2,13 @@
     package="cn.roy.zlib.tool">
 
     <!--悬浮窗口权限-->
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!--锁屏后台运行-->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
