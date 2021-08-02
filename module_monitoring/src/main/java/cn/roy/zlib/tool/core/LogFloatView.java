@@ -242,8 +242,6 @@ public class LogFloatView extends AbsFloatView implements View.OnClickListener {
             selectLevelSet.add(index);
             index++;
         }
-        // 添加所有记录
-        logBeanList.addAll(Recorder.getInstance().getAllLogList());
         setTags();
     }
 

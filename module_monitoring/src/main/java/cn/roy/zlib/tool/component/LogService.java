@@ -82,7 +82,6 @@ public class LogService extends Service {
                 }else {
                     FloatWindowManager.showFloatView(getApplicationContext(),logFloatView);
                 }
-
                 logFloatView.addLog(bean);
             }
         }
