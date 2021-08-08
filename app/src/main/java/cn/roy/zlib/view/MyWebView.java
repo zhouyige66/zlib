@@ -16,6 +16,9 @@ import androidx.annotation.RequiresApi;
  * @Version: v1.0
  */
 public class MyWebView extends WebView {
+    private int[] position = new int[2];
+    private float lastX = 0, lastY = 0;
+
     public MyWebView(Context context) {
         super(context);
     }
@@ -33,15 +36,12 @@ public class MyWebView extends WebView {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    private int[] postion = new int[2];
-    private float lastX = 0, lastY = 0;
-
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         requestDisallowInterceptTouchEvent(true);
 
-        getLocationOnScreen(postion);
-        Log.d("MyWebView", "位置：" + postion[0] + "/" + postion[1]);
+        getLocationOnScreen(position);
+        Log.d("MyWebView", "位置：" + position[0] + "/" + position[1]);
         Log.d("MyWebView", "指针位置：" + ev.getX() + "/" + ev.getY());
         Log.d("MyWebView", "向上滑动：" + canScrollVertically(-1));
         Log.d("MyWebView", "向下滑动：" + canScrollVertically(1));
@@ -71,17 +71,15 @@ public class MyWebView extends WebView {
         Log.d("MyWebView", "l=" + l + ",t=" + t + ",oldl=" + oldl + ",oldt" + oldt);
     }
 
-    private boolean canScroll() {
-        return getContentHeight() * getScale() == (getHeight() + getScrollY());
+    @Override
+    protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
+        super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
+        Log.d("MyWebView", "scrollX=" + scrollX + ",scrollY=" + scrollY
+                + ",clampedX=" + clampedX + ",clampedY" + clampedY);
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        float x = ev.getX();
-        float y = ev.getY();
-        int[] location = new int[2];
-        getLocationOnScreen(location);
-        return super.onInterceptTouchEvent(ev);
+    private boolean canScroll() {
+        return getContentHeight() * getScale() == (getHeight() + getScrollY());
     }
 
 }
