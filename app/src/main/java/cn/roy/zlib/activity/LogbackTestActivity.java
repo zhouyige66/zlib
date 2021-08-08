@@ -1,5 +1,6 @@
 package cn.roy.zlib.activity;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.qos.logback.classic.Level;
+import cn.roy.module.permission_ext.RequestPermission;
 import cn.roy.zlib.R;
 import cn.roy.zlib.log.AndroidStorageUtil;
 import cn.roy.zlib.log.FileAppenderProperty;
@@ -141,4 +143,9 @@ public class LogbackTestActivity extends AppCompatActivity implements View.OnCli
         return prop;
     }
 
+    @RequestPermission(permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+            autoApply = true, applyPermissionTip = "应用需要存储权限，请授予存储权限")
+    public void storage(String path) {
+
+    }
 }

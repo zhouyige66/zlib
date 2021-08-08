@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Trace;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 
+import cn.roy.module.permission_ext.PermissionHelper;
+import cn.roy.module.permission_ext.RequestPermission;
 import cn.roy.zlib.LogUtilWrapper;
 import cn.roy.zlib.R;
 import cn.roy.zlib.permission.PermissionGrantActivity;
@@ -42,11 +45,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button5).setOnClickListener(this);
         findViewById(R.id.button6).setOnClickListener(this);
         findViewById(R.id.button7).setOnClickListener(this);
+        findViewById(R.id.button10).setOnClickListener(this);
+        findViewById(R.id.button11).setOnClickListener(this);
 
         hasPermission = PermissionUtil.hasPermissions(this, permissions);
         if (hasPermission) {
             button.setText("读写权限：已授权");
         }
+        PermissionHelper.register(this, this);
     }
 
     @Override
@@ -131,9 +137,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 LogUtilWrapper.d("跳转至http测试页面");
                 startActivity(new Intent(this, HttpTestActivity.class));
                 break;
+            case R.id.button10:
+                MainActivity_RequestPermission proxy = (MainActivity_RequestPermission)
+                        PermissionHelper.get(this);
+                proxy.camera("我是周宗义");
+                break;
+            case R.id.button11:
+                startActivity(new Intent(this, WebViewTestActivity.class));
+                break;
             default:
                 break;
         }
     }
 
+    @RequestPermission(permissions = {Manifest.permission.CAMERA},
+            autoApply = true, applyPermissionTip = "应用需要相机权限，请授予相机权限")
+    public void camera(String path) {
+        openCamera(path);
+    }
+
+    public void camera_real(String path) {
+        Log.d("Roy", "调用了真实方法:" + path);
+    }
+
+    private void openCamera(String path) {
+
+    }
+
+    @RequestPermission(permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+            autoApply = true, applyPermissionTip = "应用需要存储权限，请授予存储权限")
+    public void storage(String path) {
+
+    }
 }

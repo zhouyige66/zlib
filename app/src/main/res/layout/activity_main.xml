@@ -55,4 +55,18 @@
         android:layout_height="wrap_content"
         android:text="跳转Http测试"
         android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="权限申请注解测试"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WebView滑动测试"
+        android:textAllCaps="false" />
 </LinearLayout>

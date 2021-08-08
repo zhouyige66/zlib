@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.roy.zlib">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
@@ -21,6 +24,7 @@
         </activity>
         <activity android:name=".activity.LogbackTestActivity" />
         <activity android:name=".activity.HttpTestActivity" />
+        <activity android:name=".activity.WebViewTestActivity" />
     </application>
 
 </manifest>
