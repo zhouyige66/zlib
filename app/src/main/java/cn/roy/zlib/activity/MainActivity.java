@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, HttpTestActivity.class));
                 break;
             case R.id.button10:
-                MainActivity_RequestPermission proxy = (MainActivity_RequestPermission)
+                MainActivity_RequestPermissionExt proxy = (MainActivity_RequestPermissionExt)
                         PermissionHelper.get(this);
                 proxy.camera("我是周宗义");
                 break;
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @RequestPermission(permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE},
             autoApply = true, applyPermissionTip = "应用需要存储权限，请授予存储权限")
-    public void storage(String path) {
-
+    public String storage(String path) {
+        return "存储权限";
     }
 }

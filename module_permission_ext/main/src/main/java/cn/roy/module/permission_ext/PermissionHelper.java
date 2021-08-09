@@ -23,7 +23,7 @@ public class PermissionHelper {
         String clsName = obj.getClass().getName();
         try {
             Class<?> clazz = obj.getClass().getClassLoader()
-                    .loadClass(clsName + "_RequestPermission");
+                    .loadClass(clsName + "_RequestPermissionExt");
             Constructor<? extends RequestPermissionContextHolder> constructor =
                     (Constructor<? extends RequestPermissionContextHolder>) clazz.getConstructor();
             target = constructor.newInstance();

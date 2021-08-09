@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -31,7 +32,8 @@ public class MainActivity_RequestPermission implements RequestPermissionContextH
         this.context = context;
     }
 
-    public void camera(String path) {
+    public String camera(String path) {
+        Log.d("RequestPermissionExt","进入代理方法");
         String[] permissions = {Manifest.permission.CAMERA};
         boolean autoApply = true;
         int applyPermissionCode = 50001;
@@ -42,6 +44,7 @@ public class MainActivity_RequestPermission implements RequestPermissionContextH
         boolean hasPermission = PermissionHelper.hasPermission(context, permissions);
         if (hasPermission) {
             try {
+                Log.d("RequestPermissionExt","执行真实方法");
                 Method method = context.getClass()
                         .getDeclaredMethod(methodName + "_real", methodParams);
                 method.invoke(context, path);
@@ -52,7 +55,7 @@ public class MainActivity_RequestPermission implements RequestPermissionContextH
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             }
-            return;
+            return null;
         }
         if (context instanceof Activity && autoApply) {
             Activity activity = (Activity) context;
@@ -65,11 +68,13 @@ public class MainActivity_RequestPermission implements RequestPermissionContextH
                                     applyPermissionCode);
                         }).setNegativeButton("取消", (dialog, which) -> dialog.dismiss())
                         .show();
-                return;
+            } else {
+                ActivityCompat.requestPermissions(activity, permissions, applyPermissionCode);
             }
-            ActivityCompat.requestPermissions(activity, permissions, applyPermissionCode);
+        } else {
+            Toast.makeText(context, lackPermissionTip, Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(context, lackPermissionTip, Toast.LENGTH_SHORT).show();
+        return null;
     }
 
 }
