@@ -211,7 +211,7 @@ public class RequestPermissionProcessor extends AbstractProcessor {
 
                 CodeBlock block2 = CodeBlock.builder().add("if (context instanceof $T && autoApply) {\n" +
                                 "    Activity activity = (Activity) context;\n" +
-                                "    if ($T.isEmpty(applyPermissionTip)) {\n" +
+                                "    if (!$T.isEmpty(applyPermissionTip)) {\n" +
                                 "        new $T.Builder(context)\n" +
                                 "                .setMessage(applyPermissionTip)\n" +
                                 "                .setPositiveButton(\"确定\", (dialog, which) -> {\n" +

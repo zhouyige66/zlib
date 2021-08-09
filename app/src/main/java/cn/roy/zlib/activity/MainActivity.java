@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        PermissionHelper.unRegister(this);
     }
 
     @Override
@@ -157,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void camera_real(String path) {
-        Log.d("Roy", "调用了真实方法:" + path);
+        Toast.makeText(this, "调用了真实方法，参数：" + path, Toast.LENGTH_SHORT).show();
     }
 
     private void openCamera(String path) {
