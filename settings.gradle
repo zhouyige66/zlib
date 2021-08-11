@@ -10,5 +10,5 @@ include ':module_permission_ext:compiler'
 include ':module_permission_ext:main'
 include ':module_permission_ext:plugin'
 
-//include ':app'
+include ':app'
 

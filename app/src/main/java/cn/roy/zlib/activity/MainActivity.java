@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Trace;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,8 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 
-import cn.roy.module.permission_ext.PermissionHelper;
-import cn.roy.module.permission_ext.RequestPermission;
+import cn.roy.zlib.permission_ext.PermissionHelper;
+import cn.roy.zlib.permission_ext.RequestPermission;
 import cn.roy.zlib.LogUtilWrapper;
 import cn.roy.zlib.R;
 import cn.roy.zlib.permission.PermissionGrantActivity;
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button5).setOnClickListener(this);
         findViewById(R.id.button6).setOnClickListener(this);
         findViewById(R.id.button7).setOnClickListener(this);
+        findViewById(R.id.button8).setOnClickListener(this);
         findViewById(R.id.button10).setOnClickListener(this);
         findViewById(R.id.button11).setOnClickListener(this);
 
@@ -139,13 +139,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 LogUtilWrapper.d("跳转至http测试页面");
                 startActivity(new Intent(this, HttpTestActivity.class));
                 break;
+            case R.id.button8:
+                startActivity(new Intent(this, WebViewTestActivity.class));
+                break;
             case R.id.button10:
-                MainActivity_RequestPermissionExt proxy = (MainActivity_RequestPermissionExt)
-                        PermissionHelper.get(this);
-                proxy.camera("我是周宗义");
+                camera("我是周宗义");
                 break;
             case R.id.button11:
-                startActivity(new Intent(this, WebViewTestActivity.class));
+                Toast.makeText(this, "调用方法返回结果：" + storage("你好，世界！！"),
+                        Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -155,20 +157,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @RequestPermission(permissions = {Manifest.permission.CAMERA},
             autoApply = true, applyPermissionTip = "应用需要相机权限，请授予相机权限")
     public void camera(String path) {
-        openCamera(path);
+        Toast.makeText(this, "调用了打开相机，传参：" + path, Toast.LENGTH_SHORT).show();
     }
 
-    public void camera_real(String path) {
-        Toast.makeText(this, "调用了真实方法，参数：" + path, Toast.LENGTH_SHORT).show();
-    }
-
-    private void openCamera(String path) {
-
-    }
-
-    @RequestPermission(permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-            autoApply = true, applyPermissionTip = "应用需要存储权限，请授予存储权限")
+    @RequestPermission(permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO},
+            autoApply = true,
+            applyPermissionCode = 10000,
+            applyPermissionTip = "应用需要存储权限、录音机权限，请授予存储权限",
+            lackPermissionTip = "缺乏相应权限，请进入应用管理页面授予相应权限"
+    )
     public String storage(String path) {
-        return "存储权限";
+        return "回复：" + path;
     }
+
 }

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'cn.roy.zlib.permission_ext.plugin'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -45,7 +46,7 @@ dependencies {
     implementation project(path: ':module_http_kotlin')
     implementation project(path: ':module_permission')
     implementation project(path: ':module_logger')
-    implementation project(path: ':module_apm')
+//    implementation project(path: ':module_apm')
     implementation project(path: ':module_monitoring')
 
     annotationProcessor project(path: ':module_permission_ext:compiler')

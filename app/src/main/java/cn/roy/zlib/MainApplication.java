@@ -3,12 +3,14 @@ package cn.roy.zlib;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.multidex.MultiDex;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import cn.roy.zlib.log.LogConfigBuilder;
 import cn.roy.zlib.log.LogUtil;
-import cn.roy.zlib.monitor.Monitor;
+//import cn.roy.zlib.monitor.Monitor;
 import cn.roy.zlib.tool.MonitoringToolSDK;
 
 /**
@@ -37,6 +39,7 @@ public class MainApplication extends Application {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+        MultiDex.install(this);
     }
 
     @Override
@@ -44,12 +47,12 @@ public class MainApplication extends Application {
         super.onCreate();
 
         new LogConfigBuilder(this).buildDefault();
-        Monitor.getInstance().init(new Monitor.Options(this)
-                .setBlockMonitorEnable(true)
-                .setBlockMonitorTimeout(2000)
-                .setCrashMonitorEnable(true)
-                .setCrashLogAutoSave(true)
-                .setExceptionInfoLogger(exceptionInfo -> LogUtil.e(exceptionInfo)));
+//        Monitor.getInstance().init(new Monitor.Options(this)
+//                .setBlockMonitorEnable(true)
+//                .setBlockMonitorTimeout(2000)
+//                .setCrashMonitorEnable(true)
+//                .setCrashLogAutoSave(true)
+//                .setExceptionInfoLogger(exceptionInfo -> LogUtil.e(exceptionInfo)));
         MonitoringToolSDK.getInstance().init(this);
     }
 

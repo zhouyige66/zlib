@@ -1,4 +1,4 @@
-package cn.roy.module.permission_ext;
+package cn.roy.zlib.permission_ext;
 
 import java.util.List;
 

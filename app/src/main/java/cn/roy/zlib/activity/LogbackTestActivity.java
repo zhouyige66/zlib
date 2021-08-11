@@ -4,6 +4,7 @@ import android.Manifest;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.qos.logback.classic.Level;
-import cn.roy.module.permission_ext.RequestPermission;
+import cn.roy.zlib.permission_ext.PermissionHelper;
+import cn.roy.zlib.permission_ext.RequestPermission;
 import cn.roy.zlib.R;
 import cn.roy.zlib.log.AndroidStorageUtil;
 import cn.roy.zlib.log.FileAppenderProperty;
@@ -27,6 +29,7 @@ public class LogbackTestActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_logback_test);
 
         setTitle("Logback Test");
+        findViewById(R.id.button).setOnClickListener(this);
         findViewById(R.id.button1).setOnClickListener(this);
         findViewById(R.id.button2).setOnClickListener(this);
         findViewById(R.id.button3).setOnClickListener(this);
@@ -37,11 +40,23 @@ public class LogbackTestActivity extends AppCompatActivity implements View.OnCli
 
         // 配置默认
         new LogConfigBuilder(this).setRootLevel(Level.DEBUG).buildDefault();
+
+        PermissionHelper.register(this, this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        PermissionHelper.unRegister(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.button:
+                requestStorePermission("哈哈哈");
+                break;
             case R.id.button1:
                 singleModel();
                 break;
@@ -145,7 +160,7 @@ public class LogbackTestActivity extends AppCompatActivity implements View.OnCli
 
     @RequestPermission(permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE},
             autoApply = true, applyPermissionTip = "应用需要存储权限，请授予存储权限")
-    public void storage(String path) {
-
+    public void requestStorePermission(String path) {
+        Toast.makeText(this, "已经获得存储权限授权", Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,4 +1,4 @@
-package cn.roy.module.permission_ext;
+package cn.roy.zlib.permission_ext;
 
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
@@ -152,8 +152,8 @@ public class RequestPermissionProcessor extends AbstractProcessor {
         ClassName ActivityCompat = ClassName.get("androidx.core.app", "ActivityCompat");
         ClassName InvocationTargetException = ClassName.get("java.lang.reflect", "InvocationTargetException");
         ClassName Method = ClassName.get("java.lang.reflect", "Method");
-        ClassName PermissionHelper = ClassName.get("cn.roy.module.permission_ext", "PermissionHelper");
-        ClassName RequestPermissionContextHolder = ClassName.get("cn.roy.module.permission_ext", "RequestPermissionContextHolder");
+        ClassName PermissionHelper = ClassName.get("cn.roy.zlib.permission_ext", "PermissionHelper");
+        ClassName RequestPermissionContextHolder = ClassName.get("cn.roy.zlib.permission_ext", "RequestPermissionContextHolder");
 
         log("生成扩展类的个数：" + processMap.values().size());
         for (RequestPermissionClassParams classParams : processMap.values()) {
@@ -182,8 +182,9 @@ public class RequestPermissionProcessor extends AbstractProcessor {
                     parameterClassList.add(parameterType.toString() + ".class");
                 }
                 String permissions = Arrays.stream(annotationParams.getPermissions())
+                        .map(e -> String.format("\"%s\"", e))
                         .collect(Collectors.joining(","));
-
+                log("转换后：" + permissions);
                 String returnStr = "";
                 String returnStr2 = "";
                 if (returnType.toString().equals("void")) {
@@ -231,7 +232,7 @@ public class RequestPermissionProcessor extends AbstractProcessor {
                         .addModifiers(Modifier.PUBLIC)
                         .addParameters(parameterSpecList)
                         .addStatement("$T.d(\"RequestPermissionExt\",\"进入代理方法\")", Log)
-                        .addStatement("$T[] permissions = {$S}", String.class, permissions)
+                        .addStatement("$T[] permissions = {$L}", String.class, permissions)
                         .addStatement("boolean autoApply = $L", annotationParams.isAutoApply())
                         .addStatement("int applyPermissionCode = $L", annotationParams.getApplyPermissionCode())
                         .addStatement("String applyPermissionTip = $S", annotationParams.getApplyPermissionTip())
