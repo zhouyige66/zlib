@@ -38,4 +38,5 @@ dependencies {
 
     implementation rootProject.androidx_appcompat
     implementation rootProject.material
+    api project(path: ':module_monitoring_core')
 }

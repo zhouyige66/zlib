@@ -9,25 +9,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--配置descendantFocusability，防止点击WebView内容后WebView自动撑满全屏-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:descendantFocusability="beforeDescendants"
             android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="300dp"
                 android:background="#5676ce" />
 
             <cn.roy.zlib.view.MyWebView
                 android:id="@+id/wv"
                 android:layout_width="match_parent"
-                android:layout_height="750dp"
+                android:layout_height="300dp"
                 tools:ignore="WebViewLayout" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="300dp"
                 android:background="#ce5676" />
 
         </LinearLayout>

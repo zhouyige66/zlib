@@ -1,7 +1,7 @@
 package cn.roy.zlib;
 
 import cn.roy.zlib.log.LogUtil;
-import cn.roy.zlib.tool.MonitoringTool;
+import cn.roy.zlib.monitoring.MonitoringAbilityForDebug;
 
 /**
  * @Description:
@@ -12,7 +12,7 @@ import cn.roy.zlib.tool.MonitoringTool;
 public class LogUtilWrapper {
 
     public static void d(String msg) {
-        MonitoringTool.d("roy", msg);
+        MonitoringAbilityForDebug.d("roy", msg);
         LogUtil.d(msg);
     }
 

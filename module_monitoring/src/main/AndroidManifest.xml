@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.roy.zlib.tool">
+    package="cn.roy.zlib.monitoring">
 
     <!--悬浮窗口权限-->
     <uses-feature
@@ -15,23 +15,23 @@
 
     <application>
         <activity
-            android:name=".component.ApplyAlertWindowPermissionActivity"
+            android:name="cn.roy.zlib.monitoring.component.ApplyAlertWindowPermissionActivity"
             android:launchMode="singleTask"
             android:theme="@style/ActivityThemeTransparent" />
         <activity
-            android:name=".component.LogListActivity"
+            android:name="cn.roy.zlib.monitoring.component.LogListActivity"
             android:icon="@mipmap/ic_float_log"
             android:label="FloatLog"
-            android:taskAffinity="cn.roy.zlib.tool.${applicationId}"
+            android:taskAffinity="cn.roy.zlib.monitoring.${applicationId}"
             android:theme="@style/ActivityThemeNoTitle" />
 
         <activity-alias
-            android:name="cn.roy.zlib.tool.component.FloatLogLauncherActivity"
+            android:name="cn.roy.zlib.monitoring.component.FloatLogLauncherActivity"
             android:enabled="true"
             android:icon="@mipmap/ic_float_log"
             android:label="FloatLog"
-            android:targetActivity="cn.roy.zlib.tool.component.LogListActivity"
-            android:taskAffinity="cn.roy.zlib.tool.${applicationId}"
+            android:targetActivity="cn.roy.zlib.monitoring.component.LogListActivity"
+            android:taskAffinity="cn.roy.zlib.monitoring.${applicationId}"
             android:theme="@style/ActivityThemeNoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +42,6 @@
             </intent-filter>
         </activity-alias>
 
-        <service android:name=".component.LogService" />
+        <service android:name="cn.roy.zlib.monitoring.component.LogService" />
     </application>
 </manifest>

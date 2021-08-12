@@ -1,23 +1,19 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'cn.roy.zlib.permission_ext.plugin'
+plugins {
+    id 'com.android.library'
+}
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "cn.roy.zlib.demo"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner rootProject.testInstrumentationRunner
-
-        // 开启multidex
-        multiDexEnabled true
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -33,23 +29,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation rootProject.junit
     androidTestImplementation rootProject.androidx_test_ext
     androidTestImplementation rootProject.androidx_test_espresso
 
     implementation rootProject.androidx_appcompat
-    implementation rootProject.constraintlayout
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'com.android.support:multidex:1.0.3'
-
-    implementation project(path: ':module_http_kotlin')
-    implementation project(path: ':module_permission')
-    implementation project(path: ':module_logger')
-    implementation project(path: ':module_apm')
-    implementation project(path: ':module_monitoring')
-
-    annotationProcessor project(path: ':module_permission_ext:compiler')
-    implementation project(path: ':module_permission_ext:main')
 }
-

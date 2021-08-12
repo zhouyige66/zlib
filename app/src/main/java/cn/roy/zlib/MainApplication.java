@@ -10,8 +10,9 @@ import java.lang.reflect.Method;
 
 import cn.roy.zlib.log.LogConfigBuilder;
 import cn.roy.zlib.log.LogUtil;
-//import cn.roy.zlib.monitor.Monitor;
-import cn.roy.zlib.tool.MonitoringToolSDK;
+import cn.roy.zlib.monitor.APMInitializer;
+import cn.roy.zlib.monitoring.MonitoringConfig;
+import cn.roy.zlib.monitoring.MonitoringInitializer;
 
 /**
  * @Description:
@@ -47,13 +48,28 @@ public class MainApplication extends Application {
         super.onCreate();
 
         new LogConfigBuilder(this).buildDefault();
-//        Monitor.getInstance().init(new Monitor.Options(this)
-//                .setBlockMonitorEnable(true)
-//                .setBlockMonitorTimeout(2000)
-//                .setCrashMonitorEnable(true)
-//                .setCrashLogAutoSave(true)
-//                .setExceptionInfoLogger(exceptionInfo -> LogUtil.e(exceptionInfo)));
-        MonitoringToolSDK.getInstance().init(this);
+        APMInitializer.getInstance().init(new APMInitializer.Options(this)
+                .setBlockMonitorEnable(true)
+                .setBlockMonitorTimeout(2000)
+                .setCrashMonitorEnable(true)
+                .setCrashLogAutoSave(true)
+                .setExceptionInfoLogger(exceptionInfo -> LogUtil.e(exceptionInfo)));
+        MonitoringInitializer.getInstance().init(new MonitoringConfig() {
+            @Override
+            public Context getContext() {
+                return MainApplication.this;
+            }
+
+            @Override
+            public int getMaxLogCount() {
+                return 1000;
+            }
+
+            @Override
+            public boolean isEnable() {
+                return true;
+            }
+        });
     }
 
 }

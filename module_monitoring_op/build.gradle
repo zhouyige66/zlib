@@ -37,4 +37,5 @@ dependencies {
     androidTestImplementation rootProject.androidx_test_espresso
 
     implementation rootProject.androidx_appcompat
+    api project(path: ':module_monitoring_core')
 }
