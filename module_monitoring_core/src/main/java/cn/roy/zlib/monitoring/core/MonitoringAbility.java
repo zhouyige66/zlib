@@ -1,4 +1,4 @@
-package cn.roy.zlib.monitoring;
+package cn.roy.zlib.monitoring.core;
 
 /**
  * @Description: Monitoring能力
@@ -6,7 +6,7 @@ package cn.roy.zlib.monitoring;
  * @Date: 2021/08/12
  * @Version: v1.0
  */
-interface MonitoringAbility {
+public interface MonitoringAbility {
 
     void v(String tag, String msg);
 

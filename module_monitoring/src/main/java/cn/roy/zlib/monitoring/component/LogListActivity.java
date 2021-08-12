@@ -33,7 +33,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.roy.zlib.monitoring.MonitoringInitializer;
+import cn.roy.zlib.monitoring.core.MonitoringInitializer;
 import cn.roy.zlib.monitoring.R;
 import cn.roy.zlib.monitoring.adapter.CommonAdapter;
 import cn.roy.zlib.monitoring.adapter.base.ViewHolder;

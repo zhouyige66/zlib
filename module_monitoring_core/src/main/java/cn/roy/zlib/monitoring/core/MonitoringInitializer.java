@@ -1,6 +1,8 @@
-package cn.roy.zlib.monitoring;
+package cn.roy.zlib.monitoring.core;
 
 import android.content.Context;
+
+import java.util.ServiceLoader;
 
 /**
  * @Description: 日志监视窗初始化
@@ -47,6 +49,17 @@ public class MonitoringInitializer {
 
     public boolean isEnable() {
         return enable;
+    }
+
+    public MonitoringAbility getAbility() {
+        if (ability == null) {
+            ServiceLoader<MonitoringAbility> monitoringAbilities =
+                    ServiceLoader.load(MonitoringAbility.class);
+            if (monitoringAbilities != null) {
+                ability = monitoringAbilities.iterator().next();
+            }
+        }
+        return ability;
     }
 
     public void setEnable(boolean enable) {

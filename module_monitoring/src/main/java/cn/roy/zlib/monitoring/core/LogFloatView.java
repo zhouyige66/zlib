@@ -335,7 +335,7 @@ public class LogFloatView extends AbsFloatView implements View.OnClickListener {
         if (!check) {
             if (isShowLevelFilter || !isSelectAllTag) {
                 // 至少选择一项
-                Toast.makeText(Recorder.getInstance().getAppContext(), "请至少选择一项",
+                Toast.makeText(MonitoringInitializer.getInstance().getContext(), "请至少选择一项",
                         Toast.LENGTH_SHORT).show();
                 return;
             }

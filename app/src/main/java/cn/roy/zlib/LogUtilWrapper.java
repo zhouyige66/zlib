@@ -1,7 +1,7 @@
 package cn.roy.zlib;
 
 import cn.roy.zlib.log.LogUtil;
-import cn.roy.zlib.monitoring.MonitoringAbilityForDebug;
+import cn.roy.zlib.monitoring.core.ILog;
 
 /**
  * @Description:
@@ -12,8 +12,22 @@ import cn.roy.zlib.monitoring.MonitoringAbilityForDebug;
 public class LogUtilWrapper {
 
     public static void d(String msg) {
-        MonitoringAbilityForDebug.d("roy", msg);
+        ILog.d("roy", msg);
         LogUtil.d(msg);
     }
 
+    public static void i(String msg) {
+        ILog.i("roy", msg);
+        LogUtil.i(msg);
+    }
+
+    public static void w(String msg) {
+        ILog.w("roy", msg);
+        LogUtil.w(msg);
+    }
+
+    public static void e(String msg) {
+        ILog.e("roy", msg);
+        LogUtil.e(msg);
+    }
 }

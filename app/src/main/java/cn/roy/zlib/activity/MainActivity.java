@@ -84,11 +84,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (!hasPermission) {
                     PermissionGrantActivity.jump2PermissionGrantActivity(this, permissions);
                 } else {
-                    LogUtilWrapper.d("已经获取授权");
+                    LogUtilWrapper.i("已经获取授权");
                 }
                 break;
             case R.id.button2:
-                LogUtilWrapper.d("卡顿测试");
+                LogUtilWrapper.w("卡顿测试");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.button3:
-                LogUtilWrapper.d("崩溃测试");
+                LogUtilWrapper.e("崩溃测试");
                 int i = 0;
                 int k = 100 / i;
                 LogUtilWrapper.d("k==" + k);

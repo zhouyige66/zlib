@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cn.roy.zlib.monitoring.MonitoringInitializer;
 import cn.roy.zlib.monitoring.bean.LogBean;
 import cn.roy.zlib.monitoring.bean.TagBean;
 import cn.roy.zlib.monitoring.component.LogService;
