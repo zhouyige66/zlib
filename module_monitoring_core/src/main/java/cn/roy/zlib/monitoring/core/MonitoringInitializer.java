@@ -51,6 +51,11 @@ public class MonitoringInitializer {
         return enable;
     }
 
+    /**
+     * SPI机制实现获取注册的服务提供者
+     *
+     * @return
+     */
     public MonitoringAbility getAbility() {
         if (ability == null) {
             ServiceLoader<MonitoringAbility> monitoringAbilities =
@@ -62,6 +67,11 @@ public class MonitoringInitializer {
         return ability;
     }
 
+    /**
+     * 动态修改监视功能是否可用
+     *
+     * @param enable
+     */
     public void setEnable(boolean enable) {
         this.enable = enable;
     }

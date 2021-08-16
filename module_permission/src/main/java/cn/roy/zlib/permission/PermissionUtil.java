@@ -71,7 +71,6 @@ public class PermissionUtil {
          *   5.1 targetSDKVersion>=23时无效，小于23时，直接返回true，检测结果不准确
          */
         boolean hasPermission;
-
         // 以23版本为界（Build.VERSION_CODES.M）
         int targetSDKVersion = getTargetSDKVersion(context);
         int sdkInt = Build.VERSION.SDK_INT;

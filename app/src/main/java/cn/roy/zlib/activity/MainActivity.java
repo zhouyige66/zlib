@@ -98,8 +98,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button3:
                 LogUtilWrapper.e("崩溃测试");
                 int i = 0;
-                int k = 100 / i;
-                LogUtilWrapper.d("k==" + k);
+                try {
+                    int k = 100 / i;
+                    LogUtilWrapper.d("k==" + k);
+                } catch (Exception e) {
+                    LogUtilWrapper.e("捕获异常：" + e.getMessage());
+                    e.printStackTrace();
+                }
                 break;
             case R.id.button4:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {

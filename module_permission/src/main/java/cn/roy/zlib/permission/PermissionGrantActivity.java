@@ -1,7 +1,6 @@
 package cn.roy.zlib.permission;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -123,21 +122,11 @@ public class PermissionGrantActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.permission_lack_dialog_title));
         builder.setMessage(getString(R.string.permission_lack_dialog_msg));
-        builder.setNegativeButton(R.string.permission_lack_dialog_negative_button,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        setResult(PERMISSIONS_DENIED);
-                        finish();
-                    }
-                });
-        builder.setPositiveButton(R.string.permission_lack_dialog_positive_button,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startAppSettings();
-                    }
-                });
+        builder.setNegativeButton(R.string.permission_lack_dialog_negative_button, (dialog, which) -> {
+            setResult(PERMISSIONS_DENIED);
+            finish();
+        });
+        builder.setPositiveButton(R.string.permission_lack_dialog_positive_button, (dialog, which) -> startAppSettings());
         builder.show();
     }
 

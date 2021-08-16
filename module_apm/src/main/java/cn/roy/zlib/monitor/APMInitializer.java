@@ -58,7 +58,7 @@ public final class APMInitializer {
      */
     public static final class Options {
         private Context applicationContext;
-        private boolean isCrashMonitorEnable = false;
+        private boolean isCrashMonitorEnable = false;// 崩溃监控可用
         private String crashMonitorLogPath;// 崩溃日志存储路径
         private boolean autoSaveCrashLog = false;// 自动保存崩溃日志
         private CrashExceptionCustomHandler crashExceptionCustomHandler;// 用户自定义异常处理
