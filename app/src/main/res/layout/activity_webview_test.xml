@@ -5,15 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <cn.roy.zlib.view.MyNestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--配置descendantFocusability，防止点击WebView内容后WebView自动撑满全屏-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:descendantFocusability="beforeDescendants"
             android:orientation="vertical">
 
             <View
@@ -21,11 +20,20 @@
                 android:layout_height="300dp"
                 android:background="#5676ce" />
 
-            <cn.roy.zlib.view.MyWebView
-                android:id="@+id/wv"
+            <!--配置descendantFocusability，防止点击WebView内容后WebView自动撑满全屏-->
+            <LinearLayout
+                android:id="@+id/webViewContainer"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                tools:ignore="WebViewLayout" />
+                android:layout_height="820dp"
+                android:descendantFocusability="beforeDescendants"
+                android:orientation="vertical">
+
+                <cn.roy.zlib.view.MyWebView
+                    android:id="@+id/wv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:ignore="WebViewLayout" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -33,6 +41,6 @@
                 android:background="#ce5676" />
 
         </LinearLayout>
-    </ScrollView>
+    </cn.roy.zlib.view.MyNestedScrollView>
 
 </LinearLayout>
