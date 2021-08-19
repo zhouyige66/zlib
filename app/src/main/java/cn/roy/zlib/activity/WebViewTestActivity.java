@@ -1,8 +1,10 @@
 package cn.roy.zlib.activity;
 
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -11,6 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cn.roy.zlib.R;
@@ -24,6 +27,8 @@ import cn.roy.zlib.view.MyWebView;
  * @Version: v1.0
  */
 public class WebViewTestActivity extends AppCompatActivity {
+    private static final String TAG = "WebViewTestActivity";
+
     private ViewGroup webViewContainer;
     private MyWebView webView;
 
@@ -38,23 +43,25 @@ public class WebViewTestActivity extends AppCompatActivity {
         scrollView.setNestedScrollingEnabled(true);
 
         webView.setWebViewClient(new WebViewClient() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                Log.d(TAG, "2.加载url:" + url);
+                webView.resetSlideFlag();
                 return super.shouldOverrideUrlLoading(view, request);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.d(TAG, "1.加载url:" + url);
+                webView.resetSlideFlag();
+                return super.shouldOverrideUrlLoading(view, url);
             }
         });
         webView.setWebChromeClient(new WebChromeClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("https://www.baidu.com");
-        webView.setOnSlideListener(new MyWebView.OnSlideListener() {
-            @Override
-            public void onSlideToTop() {
-            }
-
-            @Override
-            public void onSlideToBottom() {
-            }
-        });
 
         // 修改宽高
         DisplayMetrics metric = new DisplayMetrics();

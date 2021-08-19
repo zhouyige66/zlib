@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
@@ -53,11 +52,15 @@ public class MyNestedScrollView extends NestedScrollView {
         if (target instanceof MyWebView) {
             final MyWebView myWebView = (MyWebView) target;
             target.getLocationOnScreen(mWebViewLocation);
+            int locationY = mWebViewLocation[1];
+            Log.d(TAG, "WebView距离顶点：" + locationY);
+            Log.d(TAG, "滑动距离：" + dy);
             if (dy > 0) {// 向上滑动
-                if (mWebViewLocation[1] > 0) {// 外层视图消耗滑动
+                if (locationY > 0) {// 外层视图消耗滑动
                     Log.d(TAG, "未到顶点，消耗滑动距离");
-                    scrollBy(0, dy);
-                    consumed[1] = dy;
+                    int moveY = Math.min(locationY, dy);
+                    scrollBy(0, moveY);
+                    consumed[1] = moveY;
                 } else {
                     boolean slideToBottom = myWebView.isSlideToBottom();
                     Log.d(TAG, "当前网页滑动到底部：" + slideToBottom);
@@ -67,10 +70,11 @@ public class MyNestedScrollView extends NestedScrollView {
                     }
                 }
             } else {
-                if (mWebViewLocation[1] < 0) {
+                if (locationY < 0) {
+                    int moveY = Math.max(locationY, dy);
                     Log.d(TAG, "未到底点，消耗滑动距离");
-                    scrollBy(0, dy);
-                    consumed[1] = dy;
+                    scrollBy(0, moveY);
+                    consumed[1] = moveY;
                 } else {
                     boolean slideToTop = myWebView.isSlideToTop();
                     Log.d(TAG, "当前网页滑动到顶部：" + slideToTop);
@@ -85,18 +89,8 @@ public class MyNestedScrollView extends NestedScrollView {
     }
 
     @Override
-    public void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-        super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+    public boolean onNestedPreFling(@NonNull View target, float velocityX, float velocityY) {
+        Log.d(TAG, "onNestedPreFling");
+        return super.onNestedPreFling(target, velocityX, velocityY);
     }
-
-    @Override
-    public void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
-        super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
-    }
-
-    @Override
-    public void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type, @NonNull int[] consumed) {
-        super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type, consumed);
-    }
-
 }

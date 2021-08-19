@@ -23,21 +23,13 @@ import androidx.core.view.ViewCompat;
 public class MyWebView extends WebView implements NestedScrollingChild3 {
     private static final String TAG = "MyWebView";
 
-    public interface OnSlideListener {
-        void onSlideToTop();
-
-        void onSlideToBottom();
-    }
-
-    private OnSlideListener onSlideListener;
     private NestedScrollingChildHelper nestedScrollingChildHelper;
-    private final int[] mLocation = new int[2];
     private int scrollPointerId;
     private int lastTouchY = 0;
     private final int[] mScrollConsumed = new int[2];
     private final int[] mScrollOffset = new int[2];
-    private boolean slideUp = false;
-    private boolean slideToTop = true;
+    private boolean slideUp = false;// 向上滑动
+    private boolean slideToTop = true;// 默认已滑到顶部
     private boolean slideToBottom = false;
 
     public MyWebView(Context context) {
@@ -83,11 +75,6 @@ public class MyWebView extends WebView implements NestedScrollingChild3 {
                 final int y = (int) (ev.getY(index) + 0.5f);
                 int dy = lastTouchY - y;
                 slideUp = dy > 0;
-                if (slideUp) {
-                    slideToTop = false;
-                } else {
-                    slideToBottom = false;
-                }
                 Log.d(TAG, "onTouchEvent move，偏移量：" + dy);
                 mScrollConsumed[0] = 0;
                 mScrollConsumed[1] = 0;
@@ -98,6 +85,11 @@ public class MyWebView extends WebView implements NestedScrollingChild3 {
                 }
                 Log.d(TAG, "onTouchEvent move，剩余偏移量：" + dy);
                 if (dy != 0) {
+                    if (slideUp) {
+                        slideToTop = false;
+                    } else {
+                        slideToBottom = false;
+                    }
                     scrollBy(0, dy);
                 }
                 lastTouchY = y - mScrollOffset[1];
@@ -123,7 +115,15 @@ public class MyWebView extends WebView implements NestedScrollingChild3 {
             } else {
                 slideToTop = true;
             }
+        } else {
+            if (slideUp) {
+                slideToBottom = false;
+            } else {
+                slideToTop = false;
+            }
         }
+        Log.d(TAG, "onOverScrolled，是否向上滑：" + slideUp + "，WebView滑动到顶部：" + slideToTop
+                + ",到底部：" + slideToBottom);
     }
 
     private void init() {
@@ -139,8 +139,9 @@ public class MyWebView extends WebView implements NestedScrollingChild3 {
         return slideToBottom;
     }
 
-    public void setOnSlideListener(OnSlideListener onSlideListener) {
-        this.onSlideListener = onSlideListener;
+    public void resetSlideFlag() {
+        slideToTop = true;
+        slideToBottom = false;
     }
 
     /**********TODO 功能：NestedScrollingChild3相关方法**********/
