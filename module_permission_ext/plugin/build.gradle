@@ -1,5 +1,8 @@
-apply plugin: 'groovy'
-apply plugin: 'maven'
+plugins {
+    id 'groovy'
+//    id 'maven'
+    id 'com.github.dcendents.android-maven'
+}
 group = 'cn.roy.zlib.permission_ext'
 version = '1.0.0'
 
@@ -11,10 +14,10 @@ dependencies {
     implementation 'org.javassist:javassist:3.28.0-GA'
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: uri('../repo'))
-        }
-    }
-}
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri('../repo'))
+//        }
+//    }
+//}
