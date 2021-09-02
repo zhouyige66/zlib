@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import cn.roy.zlib.monitoring.bean.LogBean;
 import cn.roy.zlib.monitoring.bean.TagBean;
@@ -35,14 +38,27 @@ public final class Recorder {
         return instance;
     }
 
+    private LinkedBlockingQueue<LogBean> logBeanLinkedBlockingQueue;
     private List<LogBean> originData;
     private Map<String, TagBean> tagBeanMap;
     private Map<Integer, Set<String>> levelTagMap;
+    private Worker mWorker;
 
     private Recorder() {
+        logBeanLinkedBlockingQueue = new LinkedBlockingQueue<>();
         originData = new ArrayList<>();
         tagBeanMap = new HashMap<>();
         levelTagMap = new HashMap<>();
+    }
+
+    /**
+     * 清空数据
+     */
+    public void clear() {
+        logBeanLinkedBlockingQueue.clear();
+        originData.clear();
+        tagBeanMap.clear();
+        levelTagMap.clear();
     }
 
     public Set<String> getLogTagList(Set<Integer> levels) {
@@ -94,82 +110,94 @@ public final class Recorder {
      * @param logBean
      */
     public void addLog(LogBean logBean) {
-        originData.add(logBean);
-        int size = originData.size();
-        if (size > MonitoringInitializer.getInstance().getMaxLogCount()) {
-            int removeSize = size - MonitoringInitializer.getInstance().getMaxLogCount() + 1;
-            List<LogBean> removeLogBeans = originData.subList(0, removeSize);
-            for (LogBean item : removeLogBeans) {
-                int logLevel = item.getLogLevel();
-                String logTag = item.getLogTag();
-                // 从相应的标签列表中移除
-                TagBean tagBean = tagBeanMap.get(logTag);
-                if (tagBean != null) {
-                    List<LogBean> logBeanList = tagBean.logBeanList;
-                    if (!logBeanList.isEmpty()) {
-                        logBeanList.remove(item);
-                    }
-                    if (logBeanList.isEmpty()) {
-                        tagBeanMap.remove(logTag);
-                    }
-                }
-                Set<String> tagSet = levelTagMap.get(logLevel);
-                if (tagSet != null) {
-                    tagSet.remove(logTag);
-                    if (tagSet.isEmpty()) {
-                        levelTagMap.remove(logLevel);
-                    }
-                }
-            }
-            originData.removeAll(removeLogBeans);
-        }
-
-        String logTag = logBean.getLogTag();
-        int logLevel = logBean.getLogLevel();
-        // 维护tagBeanMap
-        TagBean tagBean = tagBeanMap.get(logTag);
-        if (tagBean != null) {
-            List<LogBean> logBeanList = tagBean.logBeanList;
-            logBeanList.add(logBean);
-        } else {
-            tagBean = new TagBean();
-            tagBean.tagName = logTag;
-            tagBean.logBeanList = new ArrayList<>();
-            tagBean.logBeanList.add(logBean);
-            tagBeanMap.put(logTag, tagBean);
-        }
-        // 维护levelTagMap
-        Set<String> tagSet = levelTagMap.get(logLevel);
-        if (tagSet == null) {
-            tagSet = new HashSet<>();
-            levelTagMap.put(logLevel, tagSet);
-        }
-        tagSet.add(logTag);
-        if (MonitoringInitializer.getInstance().getContext() == null) {
-            return;
-        }
-        // 发送广播
-        Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction(INTENT_FILTER_LOG_EVENT);
-        broadcastIntent.putExtra("data", logBean);
-        MonitoringInitializer.getInstance().getContext().sendBroadcast(broadcastIntent);
-
-        // 判断是否有权限
-        if (AppOpsManagerUtil.checkDrawOverlays(MonitoringInitializer.getInstance().getContext())) {
-            // 构建日志实体，显示在悬浮窗口
-            Intent intent = new Intent(MonitoringInitializer.getInstance().getContext(), LogService.class);
-            intent.putExtra("data", logBean);
-            MonitoringInitializer.getInstance().getContext().startService(intent);
+        logBeanLinkedBlockingQueue.offer(logBean);
+        if (mWorker == null) {
+            mWorker = new Worker();
+            new Thread(mWorker).start();
         }
     }
 
-    /**
-     * 清空数据
-     */
-    public void clear() {
-        originData.clear();
-        tagBeanMap.clear();
-        levelTagMap.clear();
+    private class Worker implements Runnable {
+        private boolean run = true;
+
+        public void stop() {
+            this.run = false;
+        }
+
+        @Override
+        public void run() {
+            while (run) {
+                try {
+                    LogBean logBean = logBeanLinkedBlockingQueue.take();// 当无对象的时候，该方法会堵塞
+                    originData.add(logBean);
+                    int size = originData.size();
+                    if (size > MonitoringInitializer.getInstance().getMaxLogCount()) {
+                        int removeSize = size - MonitoringInitializer.getInstance().getMaxLogCount() + 1;
+                        List<LogBean> removeLogBeans = originData.subList(0, removeSize);
+                        originData.removeAll(removeLogBeans);
+                    }
+
+                    String tag = logBean.getLogTag();
+                    int level = logBean.getLogLevel();
+                    // 维护tagBeanMap
+                    TagBean tagBean = tagBeanMap.get(tag);
+                    if (tagBean == null) {
+                        tagBean = new TagBean();
+                        tagBean.tagName = tag;
+                        tagBean.logBeanList = new ArrayList<>();
+                        tagBean.logBeanList.add(logBean);
+                        tagBeanMap.put(tag, tagBean);
+                    } else {
+                        List<LogBean> logBeanList = tagBean.logBeanList;
+                        logBeanList.add(logBean);
+                    }
+                    // 维护levelTagMap
+                    Set<String> tagSet = levelTagMap.get(level);
+                    if (tagSet == null) {
+                        tagSet = new HashSet<>();
+                        levelTagMap.put(level, tagSet);
+                    }
+                    tagSet.add(tag);
+
+                    if (MonitoringInitializer.getInstance().getContext() == null) {
+                        return;
+                    }
+                    // TODO 序列化数据过长处理
+                    String logText = logBean.getLogText();
+                    int length = logText.length();
+                    ArrayList<String> logTexts = new ArrayList<>();
+                    if (length > 1024) {
+                        size = length / 1024 + 1;
+                        for (int i = 0; i < size; i++) {
+                            int index = 1024 * i;
+                            logTexts.add(logText.substring(index, index + 1024));
+                        }
+                    } else {
+                        logTexts.add(logText);
+                    }
+                    Intent broadcastIntent = new Intent();
+                    broadcastIntent.setAction(INTENT_FILTER_LOG_EVENT);
+                    broadcastIntent.putExtra("data", logBean);
+                    broadcastIntent.putStringArrayListExtra("logTextArray", logTexts);
+                    MonitoringInitializer.getInstance().getContext().sendBroadcast(broadcastIntent);
+
+                    // 判断是否有权限
+                    if (AppOpsManagerUtil.checkDrawOverlays(MonitoringInitializer.getInstance().getContext())) {
+                        // 构建日志实体，显示在悬浮窗口
+                        Intent intent = new Intent(MonitoringInitializer.getInstance().getContext(), LogService.class);
+                        intent.putExtra("data", logBean);
+                        intent.putStringArrayListExtra("logTextArray", logTexts);
+                        MonitoringInitializer.getInstance().getContext().startService(intent);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void notifyOther() {
+
     }
 
 }

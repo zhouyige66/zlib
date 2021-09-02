@@ -62,6 +62,12 @@ public class LogListActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent != null) {
                 LogBean data = intent.getParcelableExtra("data");
+                ArrayList<String> logTextArray = intent.getStringArrayListExtra("logTextArray");
+                StringBuilder logText = new StringBuilder();
+                for(String s:logTextArray){
+                    logText.append(s);
+                }
+                data.setLogText(logText.toString());
                 if (data != null) {
                     logBeanList.add(data);
                     if (data.getLogLevel() >= filterLevel

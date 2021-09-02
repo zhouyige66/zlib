@@ -1,7 +1,8 @@
 package cn.roy.zlib.monitoring.bean;
 
 import android.os.Parcel;
-import android.os.Parcelable;
+
+import java.io.Serializable;
 
 /**
  * @Description 日志bean
@@ -9,7 +10,7 @@ import android.os.Parcelable;
  * @Date 2018/4/16
  * @Version V1.0.0
  */
-public class LogBean implements Parcelable {
+public class LogBean implements Serializable {
     public static final int VERBOSE = 0;
     public static final int DEBUG = 1;
     public static final int INFO = 2;
@@ -18,7 +19,7 @@ public class LogBean implements Parcelable {
 
     private int logLevel;
     private String logTag;
-    private String logText;
+    private transient String logText;// 不需要序列化此字段
     private long date;
 
     public LogBean(int logLevel, String logTag, String logText) {
@@ -93,28 +94,4 @@ public class LogBean implements Parcelable {
         this.date = in.readLong();
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.logLevel);
-        dest.writeString(this.logTag);
-        dest.writeString(this.logText);
-        dest.writeLong(this.date);
-    }
-
-    public static final Creator<LogBean> CREATOR = new Creator<LogBean>() {
-        @Override
-        public LogBean createFromParcel(Parcel source) {
-            return new LogBean(source);
-        }
-
-        @Override
-        public LogBean[] newArray(int size) {
-            return new LogBean[size];
-        }
-    };
 }

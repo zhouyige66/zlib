@@ -10,6 +10,8 @@ import android.os.PowerManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import cn.roy.zlib.monitoring.bean.LogBean;
 import cn.roy.zlib.monitoring.core.LogFloatView;
 import cn.roy.zlib.monitoring.core.FloatWindowManager;
@@ -70,7 +72,13 @@ public class LogService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
-            LogBean bean = intent.getParcelableExtra("data");
+            LogBean bean = (LogBean) intent.getSerializableExtra("data");
+            ArrayList<String> logTextArray = intent.getStringArrayListExtra("logTextArray");
+            StringBuilder logText = new StringBuilder();
+            for(String s:logTextArray){
+                logText.append(s);
+            }
+            bean.setLogText(logText.toString());
             if (bean != null) {
                 if (logFloatView == null) {
                     logFloatView = new LogFloatView(this);
@@ -79,8 +87,8 @@ public class LogService extends Service {
                     logFloatView.getLayoutParams().width = width;
                     logFloatView.getLayoutParams().height = width * 4 / 3;
                     FloatWindowManager.addFloatView(getApplicationContext(), logFloatView);
-                }else {
-                    FloatWindowManager.showFloatView(getApplicationContext(),logFloatView);
+                } else {
+                    FloatWindowManager.showFloatView(getApplicationContext(), logFloatView);
                 }
                 logFloatView.addLog(bean);
             }
