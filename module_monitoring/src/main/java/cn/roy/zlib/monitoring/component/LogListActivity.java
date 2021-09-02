@@ -62,13 +62,13 @@ public class LogListActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent != null) {
                 LogBean data = (LogBean) intent.getSerializableExtra("data");
-                ArrayList<String> logTextArray = intent.getStringArrayListExtra("logTextArray");
-                StringBuilder logText = new StringBuilder();
-                for(String s:logTextArray){
-                    logText.append(s);
-                }
-                data.setLogText(logText.toString());
                 if (data != null) {
+                    ArrayList<String> logTextArray = intent.getStringArrayListExtra("logTextArray");
+                    StringBuilder logText = new StringBuilder();
+                    for (String s : logTextArray) {
+                        logText.append(s);
+                    }
+                    data.setLogText(logText.toString());
                     logBeanList.add(data);
                     if (data.getLogLevel() >= filterLevel
                             && TextUtils.isEmpty(filterText) || data.containKey(filterText)) {

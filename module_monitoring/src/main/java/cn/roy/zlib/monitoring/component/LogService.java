@@ -73,13 +73,13 @@ public class LogService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
             LogBean bean = (LogBean) intent.getSerializableExtra("data");
-            ArrayList<String> logTextArray = intent.getStringArrayListExtra("logTextArray");
-            StringBuilder logText = new StringBuilder();
-            for(String s:logTextArray){
-                logText.append(s);
-            }
-            bean.setLogText(logText.toString());
             if (bean != null) {
+                ArrayList<String> logTextArray = intent.getStringArrayListExtra("logTextArray");
+                StringBuilder logText = new StringBuilder();
+                for (String s : logTextArray) {
+                    logText.append(s);
+                }
+                bean.setLogText(logText.toString());
                 if (logFloatView == null) {
                     logFloatView = new LogFloatView(this);
                     logFloatView.setViewFocusable(false);
