@@ -26,7 +26,7 @@ buildscript {
         // in the individual module build.gradle files
 
         // 自定义插件
-        classpath 'cn.roy.zlib.permission_ext:plugin:1.0.0'
+//        classpath 'cn.roy.zlib.permission_ext:plugin:1.0.0'
     }
 }
 
