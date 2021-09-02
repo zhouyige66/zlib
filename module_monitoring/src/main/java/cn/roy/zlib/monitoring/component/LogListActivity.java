@@ -61,7 +61,7 @@ public class LogListActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent != null) {
-                LogBean data = intent.getParcelableExtra("data");
+                LogBean data = (LogBean) intent.getSerializableExtra("data");
                 ArrayList<String> logTextArray = intent.getStringArrayListExtra("logTextArray");
                 StringBuilder logText = new StringBuilder();
                 for(String s:logTextArray){
