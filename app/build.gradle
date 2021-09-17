@@ -50,6 +50,7 @@ dependencies {
     implementation project(path: ':module_logger')
     implementation project(path: ':module_apm')
     implementation project(path: ':module_monitoring')
+    implementation project(path: ':module_encrypt')
 
     annotationProcessor project(path: ':module_permission_ext:compiler')
     implementation project(path: ':module_permission_ext:main')

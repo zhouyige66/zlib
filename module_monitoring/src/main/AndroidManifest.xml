@@ -16,10 +16,12 @@
     <application>
         <activity
             android:name="cn.roy.zlib.monitoring.component.ApplyAlertWindowPermissionActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:theme="@style/ActivityThemeTransparent" />
         <activity
             android:name="cn.roy.zlib.monitoring.component.LogListActivity"
+            android:exported="true"
             android:icon="@mipmap/ic_float_log"
             android:label="FloatLog"
             android:taskAffinity="cn.roy.zlib.monitoring.${applicationId}"
@@ -30,6 +32,7 @@
             android:enabled="true"
             android:icon="@mipmap/ic_float_log"
             android:label="FloatLog"
+            android:exported="true"
             android:targetActivity="cn.roy.zlib.monitoring.component.LogListActivity"
             android:taskAffinity="cn.roy.zlib.monitoring.${applicationId}"
             android:theme="@style/ActivityThemeNoTitle">
@@ -42,6 +45,6 @@
             </intent-filter>
         </activity-alias>
 
-        <service android:name="cn.roy.zlib.monitoring.component.LogService" />
+        <service android:name="cn.roy.zlib.monitoring.component.LogService" android:exported="false"/>
     </application>
 </manifest>

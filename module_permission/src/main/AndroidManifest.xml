@@ -2,8 +2,10 @@
     package="cn.roy.zlib.permission">
 
     <application>
-        <activity android:name="cn.roy.zlib.permission.PermissionGrantActivity"
-            android:theme="@style/TransparentActivity"/>
+        <activity
+            android:name="cn.roy.zlib.permission.PermissionGrantActivity"
+            android:exported="false"
+            android:theme="@style/TransparentActivity" />
     </application>
 
 </manifest>

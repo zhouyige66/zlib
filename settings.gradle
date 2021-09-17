@@ -13,3 +13,4 @@ include ':module_permission_ext:plugin'
 
 include ':app'
 
+include ':module_encrypt'
