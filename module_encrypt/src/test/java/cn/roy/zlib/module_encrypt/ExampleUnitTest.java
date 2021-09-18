@@ -16,11 +16,12 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void testAes() {
+    public void testJavaAES() {
         String key = "tbalInsuranceBox";
         String encrypt = AESUtils.encrypt("VSHH21031989140", key);
         System.out.println("加密结果：" + encrypt);
         String encrypt2 = AESUtils.encrypt("120101198002010014", key);
         System.out.println("加密结果：" + encrypt2);
     }
+
 }

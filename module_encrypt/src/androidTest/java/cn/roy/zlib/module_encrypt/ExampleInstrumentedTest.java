@@ -24,4 +24,14 @@ public class ExampleInstrumentedTest {
         assertEquals("cn.roy.zlib.module_encrypt.test", appContext.getPackageName());
     }
 
+    @Test
+    public void testAndroidAES() {
+        String key = "tbalInsuranceBox";
+        String encrypt = AESUtils.encrypt("VSHH21031989140", key);
+        System.out.println("加密结果：" + encrypt);
+        String encrypt2 = AESUtils.encrypt("120101198002010014", key);
+        System.out.println("加密结果：" + encrypt2);
+        assertEquals(encrypt,encrypt2);
+    }
+
 }
